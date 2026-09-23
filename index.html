@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPAM – 6 Agentic AI Design Patterns: Which One to Pick When</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;300;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+  <style>
+    /* ─── Tokens (EPAM dark mode) ─── */
+    :root {
+      --font-primary: 'Museo Sans', 'Exo 2', 'DM Sans', sans-serif;
+      --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+      --color-sea:    #00F6FF;
+      --color-mint:   #00FFF0;
+      --color-lilac:  #B896FF;
+      --color-sky:    #7BA8FF;
+      --color-night:  #060606;
+      --color-snow:   #FBFAFA;
+
+      /* Secondary — accents only */
+      --color-lime:   #D5E662;
+      --color-leaf:   #00F4AB;
+      --color-rose:   #FF4B9B;
+      --color-papaya: #FF7701;
+
+      --bg-primary:   var(--color-night);
+      --bg-card:      #111111;
+      --bg-code:      #0C0C0C;
+      --border:       rgba(251, 250, 250, 0.15);
+      --text-primary: var(--color-snow);
+      --text-muted:   rgba(251, 250, 250, 0.55);
+      --accent-1:     var(--color-sea);
+      --accent-2:     var(--color-mint);
+      --accent-3:     var(--color-lilac);
+    }
+
+    /* ─── Reveal base overrides ─── */
+    html, body, .reveal-viewport { background: var(--bg-primary); }
+    .reveal {
+      font-family: var(--font-primary);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+    .reveal .slides { text-align: left; }
+    .reveal .slides > section,
+    .reveal .slides > section > section {
+      box-sizing: border-box;
+      height: 100%;
+      padding: 120px 80px 80px;
+    }
+    .reveal ::selection { background: var(--color-sea); color: var(--color-night); }
+    .reveal a { color: var(--accent-1); font-weight: 900; text-decoration: none; }
+    .reveal a:hover { text-decoration: underline; }
+    .reveal strong, .reveal b { font-weight: 900; }
+
+    /* ─── Fixed chrome: logo, footer, slide number ─── */
+    .deck-logo {
+      position: absolute;
+      top: 20px;
+      left: 28px;
+      padding: 12px;              /* clear space ≈ one bracket width */
+      z-index: 30;
+      pointer-events: none;
+    }
+    .deck-logo svg { display: block; width: 110px; height: auto; }
+    .deck-footer {
+      position: absolute;
+      bottom: 22px;
+      left: 40px;
+      z-index: 30;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .reveal .slide-number {
+      background: transparent;
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      right: 40px;
+      bottom: 18px;
+    }
+    .reveal .controls { color: var(--accent-1); }
+    .reveal .progress { color: var(--accent-1); height: 3px; }
+
+    /* ─── Typography (desktop scale adapted for a 1600×900 canvas) ─── */
+    .preheader {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+      margin-bottom: 28px;
+    }
+    .h-hero {
+      font-size: 104px;
+      font-weight: 100;
+      letter-spacing: 0.01em;
+      line-height: 1.08;
+    }
+    .h-title {
+      font-size: 64px;
+      font-weight: 100;
+      letter-spacing: 0.01em;
+      line-height: 1.12;
+      margin-bottom: 40px;
+    }
+    .h-hero .em, .h-title .em { font-weight: 500; }
+    .h-bold {
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .h-light {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+    }
+    .lead {
+      font-size: 30px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.55;
+      color: var(--text-muted);
+      max-width: 1100px;
+    }
+    .body {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+    .muted { color: var(--text-muted); }
+    .accent { color: var(--accent-1); }
+
+    .text-gradient {
+      background: linear-gradient(90deg, #00FFF0 0%, #00F6FF 50%, #B896FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Lists ─── */
+    .reveal ul.list { list-style: none; margin: 0; padding: 0; }
+    .reveal ul.list li {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 18px;
+      font-size: 26px;
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+    }
+    .reveal ul.list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 14px;
+      height: 2px;
+      background: var(--accent-1);
+    }
+    .reveal ul.list.sm li { font-size: 22px; margin-bottom: 12px; }
+
+    /* ─── Layout helpers ─── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .grid-code { display: grid; grid-template-columns: 1.55fr 1fr; gap: 36px; align-items: start; }
+    .stack > * + * { margin-top: 24px; }
+    .mt-s { margin-top: 16px; } .mt-m { margin-top: 32px; } .mt-l { margin-top: 56px; }
+
+    /* ─── Cards ─── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px 36px;
+    }
+    .card h3 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+      margin-bottom: 18px;
+    }
+    .card p { font-size: 22px; line-height: 1.55; letter-spacing: 0.04em; }
+    .card-eyebrow {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .card.use  { border-top: 3px solid var(--color-sea); }
+    .card.hurt { border-top: 3px solid var(--color-rose); }
+    .card.use  .card-eyebrow { color: var(--color-sea); }
+    .card.hurt .card-eyebrow { color: var(--color-rose); }
+    .card.det  { border-top: 3px solid var(--color-sea); }
+    .card.auto { border-top: 3px solid var(--color-lilac); }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      margin: 6px 8px 0 0;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+
+    /* Stat callouts — gradient is mandatory */
+    .stat-number {
+      font-size: 150px;
+      font-weight: 100;
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    /* Quote */
+    .quote {
+      border-left: 3px solid var(--accent-1);
+      padding: 8px 0 8px 36px;
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      max-width: 1250px;
+    }
+    .quote strong { font-weight: 700; }
+
+    /* ─── Code ─── */
+    .reveal pre {
+      width: 100%;
+      margin: 0;
+      box-shadow: none;
+      font-family: var(--font-mono);
+      font-size: 19px;
+      line-height: 1.5;
+    }
+    .reveal pre code {
+      display: block;
+      max-height: 640px;
+      padding: 24px 28px;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: auto;
+      word-wrap: normal;
+    }
+    .reveal pre.sm { font-size: 17px; }
+    .reveal code.inline {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      padding: 2px 10px;
+      border-radius: 4px;
+      background: rgba(0, 246, 255, 0.08);
+      color: var(--color-sea);
+    }
+    .code-caption {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* highlight.js tokens — EPAM palette */
+    .hljs                  { color: var(--color-snow); background: transparent; }
+    .hljs-comment,
+    .hljs-quote            { color: rgba(251, 250, 250, 0.45); font-style: italic; }
+    .hljs-keyword,
+    .hljs-selector-tag,
+    .hljs-built_in         { color: var(--color-lilac); }
+    .hljs-string,
+    .hljs-doctag           { color: var(--color-lime); }
+    .hljs-subst            { color: var(--color-snow); }
+    .hljs-number,
+    .hljs-literal          { color: var(--color-papaya); }
+    .hljs-title,
+    .hljs-title.function_,
+    .hljs-section          { color: var(--color-sea); }
+    .hljs-params           { color: var(--color-sky); }
+    .hljs-meta             { color: var(--color-sky); }
+    .reveal .hljs.has-highlights tr:not(.highlight-line) { opacity: 0.28; }
+    .reveal .hljs-ln-numbers {
+      color: rgba(251, 250, 250, 0.3);
+      padding-right: 20px !important;
+    }
+
+    /* Terminal-style output */
+    .terminal {
+      font-family: var(--font-mono);
+      font-size: 19px;
+      line-height: 1.65;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 24px 28px;
+      white-space: pre-wrap;
+    }
+    .terminal .t-dim   { color: var(--text-muted); }
+    .terminal .t-sea   { color: var(--color-sea); }
+    .terminal .t-lilac { color: var(--color-lilac); }
+    .terminal .t-rose  { color: var(--color-rose); }
+    .terminal .t-leaf  { color: var(--color-leaf); }
+
+    /* ─── Taxonomy map ─── */
+    .taxonomy { display: grid; grid-template-columns: 2fr 4fr; gap: 28px; }
+    .tax-root {
+      grid-column: 1 / -1;
+      padding: 18px 28px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .tax-branch {
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-card);
+    }
+    .tax-branch.det  { border-top: 3px solid var(--color-sea); }
+    .tax-branch.auto { border-top: 3px solid var(--color-lilac); }
+    .tax-branch h3 { font-size: 30px; font-weight: 700; letter-spacing: 0.02em; }
+    .tax-branch .who { font-size: 20px; color: var(--text-muted); margin: 6px 0 22px; }
+    .tax-nodes { display: flex; gap: 14px; flex-wrap: wrap; }
+    .tax-node {
+      flex: 1 1 0;
+      min-width: 150px;
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    .tax-node small {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* ─── Flow diagrams ─── */
+    .flow { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .flow-node {
+      padding: 16px 26px;
+      border: 1px solid var(--color-sea);
+      border-radius: 100px;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .flow-node.alt { border-color: var(--color-lilac); }
+    .flow-arrow { font-size: 28px; color: var(--text-muted); }
+    .flow-loop {
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-lilac);
+    }
+
+    /* Voting board */
+    .votes { display: grid; grid-template-columns: 1fr auto; row-gap: 12px; column-gap: 28px; font-size: 24px; }
+    .vote {
+      justify-self: start;
+      padding: 4px 16px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+    }
+    .vote.block     { border: 1.5px solid var(--color-rose);  color: var(--color-rose); }
+    .vote.negotiate { border: 1.5px solid var(--color-sky);   color: var(--color-sky); }
+    .vote.accept    { border: 1.5px solid var(--color-leaf);  color: var(--color-leaf); }
+
+    /* Handoff trace */
+    .trace { display: flex; flex-direction: column; gap: 10px; }
+    .trace-row {
+      display: grid;
+      grid-template-columns: 50px 190px 1fr 190px;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-card);
+      font-size: 20px;
+    }
+    .trace-row .n    { font-weight: 900; color: var(--text-muted); }
+    .trace-row .who  { font-weight: 700; }
+    .trace-row .to   { font-size: 16px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .trace-row.back  { border-color: var(--color-rose); }
+    .trace-row.back .to { color: var(--color-rose); }
+    .trace-row.done .to { color: var(--color-leaf); }
+
+    /* Tables */
+    .reveal table.epam {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 23px;
+      letter-spacing: 0.03em;
+    }
+    .reveal table.epam th {
+      text-align: left;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0 20px 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .reveal table.epam td {
+      padding: 15px 20px 15px 0;
+      border-bottom: 1px solid rgba(251, 250, 250, 0.08);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+    .reveal table.epam td:last-child { font-weight: 700; color: var(--accent-1); white-space: nowrap; }
+    .reveal table.epam tr.kiss td { color: var(--text-primary); }
+    .reveal table.epam tr.kiss td:last-child { color: var(--color-lilac); }
+
+    /* Audience poll */
+    .poll-list { display: flex; flex-direction: column; gap: 14px; max-width: 1250px; }
+    .poll {
+      padding: 18px 28px;
+      border-left: 3px solid var(--accent-1);
+      border-radius: 0 4px 4px 0;
+      background: var(--bg-card);
+      font-size: 28px;
+      letter-spacing: 0.03em;
+    }
+
+    /* QR codes — the source PNGs are colour on white, so keep a white mat */
+    .qr {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .qr img {
+      width: 170px;
+      height: 170px;
+      padding: 10px;
+      background: #FFFFFF;
+      border-radius: 4px;
+    }
+
+    /* Big section-divider number */
+    .divider-num {
+      font-size: 220px;
+      font-weight: 100;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    /* Fragments: gentle fade-up */
+    .reveal .fragment.fade-up { transform: translate(0, 24px); }
+    .reveal .fragment.fade-up.visible { transform: translate(0, 0); }
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+
+  <!-- EPAM logo, white on dark. Top-left on every slide. -->
+  <div class="deck-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590.1 207.7" aria-label="EPAM" role="img">
+      <g>
+        <g>
+          <path fill="#FFFFFF" d="M125.7,72h30.1V38.6c0-9.3-4.4-14-13.4-14H139c-8.9,0-13.4,4.7-13.4,14L125.7,72L125.7,72z M125.7,93.2l0.1,36.6c0,9.3,4.5,13.9,13.4,13.9h3.9c8.9,0,13.4-4.6,13.4-13.9v-18H177v17.1c0,23.5-11.4,35.5-34,35.5h-4.5c-22.6,0-34-11.9-34-32.7V42.2c0-26.3,11.4-38.2,34-38.2h4.5c22.6,0,34,11.9,34,35.4l-0.1,53.7L125.7,93.2L125.7,93.2z"/>
+          <path fill="#FFFFFF" d="M211.9,135.4c5.8,5.2,12.5,8.1,19.5,8.1c7.8,0,12.3-3.8,12.3-12.8v-93c0-9-4.5-12.8-12.3-12.8c-7,0-13.7,2.9-19.5,8.1V135.4z M190.7,5.9h21.2V16c5-5.5,13.6-11.9,25.9-11.9c18.1,0,27,12.5,27,31.1v98.2c0,18.6-8.9,31.1-27,31.1c-12.3,0-20.9-6.1-25.9-11.3v50.6h-21.2V5.9z"/>
+          <path fill="#FFFFFF" d="M328.3,136.2V84.6l-19.2,7.6c-7.8,3.2-10.3,7.3-10.3,16.3v23.8c0,7.6,3.6,11.3,10.3,11.3C315.5,143.6,321.4,141.2,328.3,136.2 M277.6,108.1c0-19.5,6.1-27.3,22.3-33.1l28.4-10.2V38.6c0-9.3-4.5-14.2-13.4-14.2h-3.4c-8.9,0-13.4,4.9-13.4,14.2v22.2h-20.6V39.5c0-23.5,11.4-35.4,34-35.4h4c22.6,0,34,11.9,34,35.4v123.2h-21.2v-9.9c-5.8,5.8-13.7,11.6-25.9,11.6c-17,0-24.8-10.2-24.8-27.6V108.1z"/>
+          <path fill="#FFFFFF" d="M435.1,162.8h-21.2V36.3c0-7.8-3.6-11.3-10-11.3c-5.8,0-12,2.3-19.5,7.8v129.9h-21.2V5.9h21.2V16c6.2-6.1,14.2-12,25.9-12c10.9,0,18.1,4.7,22,12.8c7.6-6.7,16.5-12.8,28.7-12.8c16.4,0,24.8,10.5,24.8,27.6v131h-21.2V36.3c0-7.8-3.6-11.3-10-11.3c-5.8,0-12,2.3-19.5,7.8L435.1,162.8L435.1,162.8z"/>
+        </g>
+        <polygon fill="#FFFFFF" points="23,74.2 23,95.5 77.4,148.8 77.4,119.2 41.8,84.6 77.4,49.1 77.4,20.2"/>
+        <polygon fill="#FFFFFF" points="512.7,49.1 548.3,84.6 512.7,119.4 512.7,148.8 567.1,95.5 567.1,74.2 512.7,20.2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="deck-footer">TechScape 2026 · Agentic AI Design Patterns</div>
+
+  <div class="slides">
+
+    <!-- ═══════════════════════════ OPENING ═══════════════════════════ -->
+
+    <!-- 1 · Title -->
+    <section data-background-gradient="radial-gradient(ellipse 55% 65% at 78% 50%, rgba(0,246,255,0.22) 0%, transparent 70%), radial-gradient(ellipse 38% 50% at 88% 58%, rgba(184,150,255,0.18) 0%, transparent 65%), radial-gradient(ellipse 32% 40% at 70% 65%, rgba(0,255,240,0.12) 0%, transparent 60%), #060606">
+      <div style="padding-top: 90px;">
+        <p class="preheader">TechScape 2026 · Agentic AI</p>
+        <h1 class="h-hero">6 agentic AI design patterns:<br>which one to pick <span class="em text-gradient">when</span></h1>
+        <p class="lead mt-m">Who decides what happens next — your code or the model?</p>
+        <div class="mt-l body">
+          <strong>Vivek Keshore</strong><br>
+          <span class="muted">Software Architect, EPAM</span>
+        </div>
+      </div>
+      <aside class="notes">
+        [0:00 – 1:30] Welcome. Introduce yourself: Vivek Keshore, Software Architect at EPAM.
+        This talk comes from an article I published on the TecToniques community, "6 Agentic AI Design Patterns: Which one to pick when."
+        Mention that the article is self-written, and every code example runs offline, so the audience can try every pattern after the talk without an API key.
+      </aside>
+    </section>
+
+    <!-- 2 · Show of hands -->
+    <section>
+      <p class="preheader">Show of hands</p>
+      <h2 class="h-title" style="margin-bottom: 32px;">Every discussion now ends with <span class="em text-gradient">agents</span></h2>
+      <div class="poll-list">
+        <div class="poll fragment fade-up">Who has sat in a meeting that ended with <strong>"let's build an AI agent"</strong>?</div>
+        <div class="poll fragment fade-up">Who started that agent by picking a <strong>framework</strong>?</div>
+        <div class="poll fragment fade-up">Who has watched an agent <strong>loop</strong> — and found out from the bill?</div>
+        <div class="poll fragment fade-up">Who has shipped an agent that a <strong>single model call</strong> could have replaced?</div>
+      </div>
+      <p class="lead mt-m fragment fade-up">Hand up? <span class="accent">This talk is for you.</span></p>
+      <aside class="notes">
+        [1:30 – 3:00] Get the room engaged. Pause after each question and let the hands go up.
+        We're in the age of agentic AI: every topic, every application ends with "let's make an agent".
+        The "found out from the bill" question usually gets a laugh — use it to build rapport.
+        The last question sets up the KISS row at the end of the talk.
+        Pivot: the problem isn't building agents, it's how we start planning them.
+      </aside>
+    </section>
+
+    <!-- 3 · The wrong question -->
+    <section>
+      <p class="preheader">The wrong question</p>
+      <div class="quote" style="font-size: 88px; font-weight: 100; border-left-color: var(--color-rose);">"LangGraph or <strong>CrewAI?</strong>"</div>
+      <p class="lead mt-l fragment fade-up">A framework choice tells you nothing about whether your app stays debuggable and maintainable.</p>
+      <aside class="notes">
+        [3:00 – 4:00] This is how most agent projects start: picking a framework.
+        The framework is an implementation detail. It doesn't answer the design question that decides whether you can debug and maintain the thing six months later.
+      </aside>
+    </section>
+
+    <!-- 4 · The right question -->
+    <section data-background-gradient="radial-gradient(ellipse 55% 60% at 80% 55%, rgba(0,246,255,0.16) 0%, transparent 70%), radial-gradient(ellipse 35% 45% at 90% 60%, rgba(184,150,255,0.14) 0%, transparent 65%), #060606">
+      <p class="preheader">The right question</p>
+      <h2 class="h-hero" style="font-size: 92px;">Who decides what happens next — your code or the <span class="em text-gradient">model?</span></h2>
+      <p class="lead mt-l fragment fade-up">Every agentic design pattern is an answer to this one question.</p>
+      <aside class="notes">
+        [4:00 – 5:00] This is the core question of the talk. Pause on it.
+        Every pattern we'll see today answers it differently. If you remember one thing, remember this question — you can use it to classify any agent architecture you meet, including ones not in this talk.
+      </aside>
+    </section>
+
+    <!-- 5 · The map -->
+    <section>
+      <p class="preheader">The map</p>
+      <h2 class="h-title" style="margin-bottom: 32px;">Two families, six <span class="em text-gradient">patterns</span></h2>
+      <div class="taxonomy">
+        <div class="tax-root">Agentic AI design patterns</div>
+        <div class="tax-branch det fragment fade-up">
+          <h3>Deterministic workflows</h3>
+          <p class="who">Code controls the execution path</p>
+          <div class="tax-nodes">
+            <div class="tax-node"><small>01</small>Planning</div>
+            <div class="tax-node"><small>02</small>Voting / Consensus</div>
+          </div>
+        </div>
+        <div class="tax-branch auto fragment fade-up">
+          <h3>Autonomous agents</h3>
+          <p class="who">The LLM controls the execution path</p>
+          <div class="tax-nodes">
+            <div class="tax-node"><small>03</small>ReAct</div>
+            <div class="tax-node"><small>04</small>Reflection</div>
+            <div class="tax-node"><small>05</small>Collaboration</div>
+            <div class="tax-node"><small>06</small>Supervisor</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [5:00 – 6:30] The classification makes the six patterns easy to remember.
+        Left: deterministic workflows — Planning and Voting. Right: autonomous agents — ReAct, Reflection, Collaboration and Supervisor.
+        The split follows the question we just asked: who owns the control flow.
+      </aside>
+    </section>
+
+    <!-- 6 · Deterministic vs Autonomous -->
+    <section>
+      <p class="preheader">Two families</p>
+      <h2 class="h-title">Where does the execution path <span class="em text-gradient">live?</span></h2>
+      <div class="grid-2">
+        <div class="card det fragment fade-up">
+          <p class="card-eyebrow" style="color: var(--color-sea);">Deterministic workflows</p>
+          <h3>The path lives in your source code</h3>
+          <ul class="list sm">
+            <li>Calls a model one or more times</li>
+            <li>You read the flow straight from the code</li>
+            <li>The same input takes the same route</li>
+          </ul>
+        </div>
+        <div class="card auto fragment fade-up">
+          <p class="card-eyebrow" style="color: var(--color-lilac);">Autonomous agents</p>
+          <h3>The LLM decides the path</h3>
+          <ul class="list sm">
+            <li>The model picks tools, judges progress and chooses who goes next</li>
+            <li>Solves problems whose steps you can't know in advance</li>
+            <li>The same input may take a different route</li>
+            <li>Reproducibility becomes a challenge</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">
+        [6:30 – 8:00] Walk through both columns.
+        Deterministic: the model is a function you call; the "if/for/while" belongs to you. Rerun it and you get the same route.
+        Autonomous: the model decides which tool to call, whether the work is done, and who handles it next. That's what lets it solve open-ended problems — and it's also why reproducibility gets hard.
+      </aside>
+    </section>
+
+    <!-- 7 · The most expensive mistake -->
+    <section>
+      <p class="preheader">The most expensive mistake</p>
+      <div class="quote">Neither family is more advanced. But picking <strong>autonomous</strong> where deterministic fits costs you twice — in tokens, and in non-determinism you never needed.</div>
+      <aside class="notes">
+        [8:00 – 9:00] This is the central warning. Autonomous is not "level 2" of deterministic. They are different tools.
+        Choosing autonomy you didn't need is the most expensive mistake: you pay in tokenomics, and you pay with non-determinism — harder debugging, flaky tests, surprising bills.
+      </aside>
+    </section>
+
+    <!-- 8 · Rules for the examples + llm.py -->
+    <section>
+      <p class="preheader">How to read the examples</p>
+      <div class="grid-code">
+        <div>
+          <p class="code-caption">llm.py — the whole abstraction</p>
+          <pre class="sm"><code class="language-python" data-trim data-line-numbers="|8-9|13-22"><script type="text/template">
+import os
+
+MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5")
+API_KEY = os.getenv("ANTHROPIC_API_KEY", None)
+
+def ask(prompt: str, system: str | None = None, stub: str = "") -> str:
+    """One prompt in, one string out."""
+    if not API_KEY:
+        return stub
+
+    import anthropic
+    anthropic_client = anthropic.Anthropic(api_key=API_KEY)
+    kwargs = {
+        "model": MODEL,
+        "max_tokens": 4096,
+        "messages": [{"role": "user", "content": prompt}],
+    }
+    if system:
+        kwargs["system"] = system
+    reply = anthropic_client.messages.create(**kwargs)
+    return "".join(b.text for b in reply.content if b.type == "text").strip()
+          </script></code></pre>
+        </div>
+        <div>
+          <div class="card">
+            <div class="stat-number text-gradient" style="font-size: 120px;">36–61</div>
+            <p class="stat-label">lines per example — complete, runnable, no framework</p>
+          </div>
+          <ul class="list sm mt-m">
+            <li>Every pattern shares one helper: <code class="inline">ask()</code></li>
+            <li>No API key? <code class="inline">stub</code> returns mocked output — runs offline</li>
+            <li>Export <code class="inline">ANTHROPIC_API_KEY</code> to call the real model — no other changes</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">
+        [9:00 – 11:00] Before the patterns: the ground rules.
+        Every example is complete and runnable in 36 to 61 lines, and shares this one helper. ask() takes a prompt and returns a string — that's the whole abstraction. No frameworks.
+        The stub argument is mocked output returned when no API key is set, so every example runs offline. The point is to learn the pattern, not to ship an app. Export ANTHROPIC_API_KEY and the same code calls Claude.
+        Transparency: Claude Opus 5 generated the examples from my specs and instructions, and I reviewed them and edited them by hand.
+        On the code slides, the stub arguments are left out so the pattern stands out — the full versions are in the article.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════ PART 1 · DETERMINISTIC ═══════════════════════ -->
+
+    <section data-background-gradient="radial-gradient(ellipse 60% 65% at 78% 50%, rgba(0,246,255,0.20) 0%, transparent 70%), radial-gradient(ellipse 35% 45% at 70% 62%, rgba(0,255,240,0.12) 0%, transparent 60%), #060606">
+      <div style="padding-top: 80px;">
+        <p class="preheader">Part 1</p>
+        <div class="divider-num text-gradient">01</div>
+        <h2 class="h-hero" style="font-size: 88px;">Deterministic workflows: code controls the <span class="em text-gradient">execution</span></h2>
+      </div>
+      <aside class="notes">
+        [11:00] Part 1 — the two patterns where your code owns the control flow: Planning and Voting.
+      </aside>
+    </section>
+
+    <!-- Planning · concept + code -->
+    <section>
+      <p class="preheader">Pattern 01 · Planning</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Ask for a plan once, then <span class="em text-gradient">execute</span> it in a loop</h2>
+      <pre><code class="language-python" data-trim data-line-numbers="|1-7|9-13|15|17-20"><script type="text/template">
+def make_plan(goal):
+    reply = ask(
+        f'Break this into 3 ordered steps. JSON only: {{"steps": [str]}}'
+        f'\n\nGoal: {goal}',
+        system="You are a staff engineer.",
+    )
+    return json.loads(reply)["steps"]
+
+def build(step, done):
+    return ask(
+        f"Already done: {done or 'nothing'}\nNow do exactly this step: {step}",
+        system="You are an engineer. Do one step. Output the artifact only.",
+    )
+
+steps = make_plan("Ship a REST API for expense reports")  # ONE call shapes all the work
+
+done = []
+for i, step in enumerate(steps, 1):  # The model has no say.
+    print(f"[{i}/{len(steps)}] {step}\n  {build(step, done)}")
+    done.append(step)
+      </script></code></pre>
+      <aside class="notes">
+        [11:00 – 13:00] Planning: ask the model for a plan, then execute it in a loop.
+        make_plan: one call returns three ordered steps as JSON. That one call decides the shape of all the work.
+        build: each step is a separate call with a small brief — what's already done, and exactly this one step.
+        The for loop: the model has no say in the order. The code owns it.
+        Output: PLAN: design the data model, write the endpoints, add tests — then 1/3, 2/3, 3/3.
+      </aside>
+    </section>
+
+    <!-- Planning · why it works + when -->
+    <section>
+      <p class="preheader">Pattern 01 · Planning</p>
+      <h2 class="h-title" style="margin-bottom: 32px;">Every failure stays <span class="em text-gradient">local</span></h2>
+      <div class="grid-3">
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Why it works</p>
+          <ul class="list sm">
+            <li>The plan can be a spec</li>
+            <li>Small brief per step keeps context small</li>
+            <li>Step 3 produces garbage? Rerun step 3 only</li>
+          </ul>
+        </div>
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Gates after each step</p>
+          <ul class="list sm">
+            <li>Does the artifact exist?</li>
+            <li>Do the tests pass?</li>
+            <li>Does the app compile and run?</li>
+          </ul>
+          <p class="muted mt-s" style="font-size: 18px;">A failed gate retries one step, not the whole run.</p>
+        </div>
+        <div class="stack">
+          <div class="card use fragment fade-up">
+            <p class="card-eyebrow">Use it when</p>
+            <p>You already know the scope of work</p>
+            <span class="tag">Periodic reports, same sections</span>
+            <span class="tag">Scaffold: DB model before API</span>
+          </div>
+          <div class="card hurt fragment fade-up">
+            <p class="card-eyebrow">It hurts when</p>
+            <p>The next step depends on what the last one found. A fixed plan can't react — it confidently runs a stale plan.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [13:00 – 15:00] The plan comes first — it can even be a spec document.
+        Each step gets a small brief, which keeps context small. Failures are localised: if step three produces garbage, you rerun step three only.
+        Real implementations add a dependency graph and a checkpoint after each step: does the artifact exist, do tests pass, does it compile and run. A failed checkpoint retries one step instead of restarting everything.
+        Use it when you know the scope — a weekly report always has the same sections, a scaffold always needs a data model before an API.
+        It hurts when step N+1 genuinely depends on what step N discovered. A fixed plan can't react, so it confidently executes a stale plan.
+      </aside>
+    </section>
+
+    <!-- Voting · code -->
+    <section>
+      <p class="preheader">Pattern 02 · Voting / Consensus</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Ask several times independently — let the <span class="em text-gradient">code</span> decide</h2>
+      <pre><code class="language-python" data-trim data-line-numbers="|1-2|4-8|10-11|13-15"><script type="text/template">
+CLAUSE = "Vendor's liability is unlimited. The contract auto-renews for 24 months."
+LENSES = ["liability", "privacy", "finance", "commercial", "regulatory"]
+
+def review(lens):
+    return ask(
+        f"Clause: {CLAUSE}\n\nReply with one word: BLOCK, NEGOTIATE or ACCEPT.",
+        system=f"You review contracts through one lens only: {lens}.",
+    ).upper()
+
+with ThreadPoolExecutor() as pool:  # independent calls
+    votes = list(pool.map(review, LENSES))
+
+tally = Counter(votes)
+top, count = tally.most_common(1)[0]
+decision = top if count >= 3 else "ESCALATE"  # the policy is code, not a prompt
+      </script></code></pre>
+      <aside class="notes">
+        [15:00 – 16:30] Voting: ask several times independently, then let code decide what the answers mean.
+        One contract clause, five reviewers, each with a single lens: liability, privacy, finance, commercial, regulatory.
+        They run in parallel in a thread pool — independent calls. Multiprocessing works too.
+        The last line is the important one: the decision policy — three or more agreeing, otherwise escalate — is code, not a prompt.
+      </aside>
+    </section>
+
+    <!-- Voting · output -->
+    <section>
+      <p class="preheader">Pattern 02 · Voting / Consensus</p>
+      <h2 class="h-title" style="margin-bottom: 36px;">Disagreement is a result, not a <span class="em text-gradient">problem</span></h2>
+      <div class="grid-2" style="grid-template-columns: 1fr 1.3fr; gap: 48px;">
+        <div class="card">
+          <p class="card-eyebrow">Five lenses, one clause</p>
+          <div class="votes">
+            <span>liability</span>  <span class="vote block">BLOCK</span>
+            <span>privacy</span>    <span class="vote accept">ACCEPT</span>
+            <span>finance</span>    <span class="vote negotiate">NEGOTIATE</span>
+            <span>commercial</span> <span class="vote negotiate">NEGOTIATE</span>
+            <span>regulatory</span> <span class="vote accept">ACCEPT</span>
+          </div>
+          <p class="mt-m" style="font-size: 22px;"><span class="muted">tally</span> 1 : 2 : 2 &nbsp;→&nbsp; <strong class="accent">ESCALATE</strong></p>
+        </div>
+        <div class="stack">
+          <div class="fragment fade-up">
+            <p class="h-light" style="font-size: 30px;"><strong>1. Reviewers must never see each other's answers.</strong></p>
+            <p class="body muted">The moment they can, their errors correlate and they converge on one opinion.</p>
+          </div>
+          <div class="fragment fade-up">
+            <p class="h-light" style="font-size: 30px;"><strong>2. Never break the tie.</strong></p>
+            <p class="body muted">One call gives you confidence. Five calls give you a distribution — 3:2, 2:2:1. Escalating to a human or another agent is the feature; forcing a tie-break throws away the only information the pattern produces.</p>
+          </div>
+          <div class="fragment fade-up">
+            <p class="body"><span class="accent">Policies live in code:</span> a BLOCK from the liability reviewer can veto regardless of the count.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [16:30 – 18:30] The output: one BLOCK, two ACCEPT, two NEGOTIATE. No option reaches three, so the code escalates.
+        Two points make or break this pattern, and both are easy to get wrong.
+        One: reviewers must not see each other's responses. If they do, their errors correlate and you get five copies of one opinion.
+        Two: disagreement is the result. A distribution like 2:2:1 is a measurement. Hand it to a human, another agent or plain Python. If you try to break the tie, you destroy the only information the pattern produced.
+        Policies such as "a liability BLOCK vetoes everything" belong in code.
+      </aside>
+    </section>
+
+    <!-- Voting · when -->
+    <section>
+      <p class="preheader">Pattern 02 · Voting / Consensus</p>
+      <h2 class="h-title">Buy confidence only when being wrong is <span class="em text-gradient">expensive</span></h2>
+      <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; align-items: stretch;">
+        <div class="card use">
+          <p class="card-eyebrow">Use it when</p>
+          <p>Being wrong is expensive, and judgement or rules in code can check correctness</p>
+          <span class="tag">Compliance review</span>
+          <span class="tag">Medical triage</span>
+        </div>
+        <div class="card hurt">
+          <p class="card-eyebrow">It hurts when</p>
+          <p>Cost matters more than confidence</p>
+        </div>
+        <div class="card">
+          <div class="stat-number text-gradient">5×</div>
+          <p class="stat-label">the price of a single call — every time</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [18:30 – 19:30] Use voting when a wrong answer is expensive — compliance review, medical triage.
+        Don't use it when cost matters more than confidence: this example costs five times a single call on every run.
+        That wraps up the deterministic family.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════ PART 2 · AUTONOMOUS ═══════════════════════ -->
+
+    <section data-background-gradient="radial-gradient(ellipse 60% 65% at 78% 50%, rgba(184,150,255,0.22) 0%, transparent 70%), radial-gradient(ellipse 38% 45% at 70% 62%, rgba(123,168,255,0.14) 0%, transparent 60%), #060606">
+      <div style="padding-top: 80px;">
+        <p class="preheader">Part 2</p>
+        <div class="divider-num text-gradient">02</div>
+        <h2 class="h-hero" style="font-size: 88px;">Autonomous agents: the LLM controls the <span class="em text-gradient">execution</span></h2>
+      </div>
+      <aside class="notes">
+        [19:30] Part 2 — four patterns where the model owns at least part of the control flow: ReAct, Reflection, Collaboration, Supervisor.
+      </aside>
+    </section>
+
+    <!-- ReAct · code -->
+    <section>
+      <p class="preheader">Pattern 03 · ReAct</p>
+      <div class="flow" style="margin-bottom: 26px;">
+        <span class="flow-node">Think</span><span class="flow-arrow">→</span>
+        <span class="flow-node">Pick a tool</span><span class="flow-arrow">→</span>
+        <span class="flow-node">Read the output</span><span class="flow-arrow">→</span>
+        <span class="flow-node alt">Think again ↺</span>
+      </div>
+      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-4|6-9|12|13-15|16-18"><script type="text/template">
+TOOLS = {
+    "check_stock": lambda sku: f"{sku}: {STOCK.get(sku, 0)} units on hand",
+    "reorder":     lambda sku, qty: f"created a PO for {qty} units of {sku}",
+}
+SYSTEM = """Work in a loop. Each turn emit exactly one line, either:
+Action: tool_name(arg, ...)
+Done: <your answer>
+Tools: check_stock(sku), reorder(sku, qty)"""
+
+transcript = "Task: SKU-4417 may stock out before the weekend promo. Fix it."
+for step in range(6):  # the step cap belongs in code, not the prompt
+    reply = ask(transcript, system=SYSTEM)
+    if reply.startswith("Done:"):
+        break
+    name, raw = re.match(r"Action:\s*(\w+)\((.*)\)", reply).groups()
+    result = TOOLS[name](*[a.strip() for a in raw.split(",") if a.strip()])
+    transcript += f"\n{reply}\nObservation: {result}"
+      </script></code></pre>
+      <aside class="notes">
+        [19:30 – 21:30] ReAct = Reason + Act. It's a loop: the model thinks, picks a tool, reads the output, thinks again.
+        Two tools: check_stock and reorder. The system prompt defines a tiny protocol: emit either "Action: tool(args)" or "Done: answer".
+        The loop: ask, stop on Done, otherwise parse the action, run the tool, and append the observation to the transcript.
+        Note the range(6) — the step cap lives in code, not in the prompt.
+      </aside>
+    </section>
+
+    <!-- ReAct · output + when -->
+    <section>
+      <p class="preheader">Pattern 03 · ReAct</p>
+      <h2 class="h-title" style="margin-bottom: 30px;">The path is discovered, not <span class="em text-gradient">declared</span></h2>
+      <div class="grid-2" style="grid-template-columns: 1.2fr 1fr; gap: 40px;">
+        <div>
+          <div class="terminal"><span class="t-sea">Action:</span> check_stock(SKU-4417)
+<span class="t-dim">Observation:</span> SKU-4417: 6 units on hand
+
+<span class="t-sea">Action:</span> reorder(SKU-4417, 120)
+<span class="t-dim">Observation:</span> created a PO for 120 units of SKU-4417
+
+<span class="t-leaf">Done:</span> Only 6 units were left before a promo,
+      so I ordered 120 more.</div>
+          <p class="body mt-m">The loop decides almost nothing: parse, run, append, repeat. Nothing in the code says <em>"check stock before reordering."</em></p>
+        </div>
+        <div class="stack">
+          <div class="card fragment fade-up" style="border-top: 3px solid var(--color-papaya);">
+            <p class="card-eyebrow" style="color: var(--color-papaya);">The step cap</p>
+            <p>A confused or hallucinating agent loops until you notice your bill.</p>
+          </div>
+          <div class="card use fragment fade-up">
+            <p class="card-eyebrow">Use it when</p>
+            <p>You can't know the path in advance</p>
+            <span class="tag">Debugging, incident response</span>
+            <span class="tag">Live data, e.g. ticker prices</span>
+          </div>
+          <div class="card hurt fragment fade-up">
+            <p class="card-eyebrow">It hurts when</p>
+            <p>The path is known or knowable — you pay per call to rediscover a sequence you could write down once</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [21:30 – 23:30] Look at what happened. The model checked stock, saw 6 units, then reordered 120. No line of code said "check stock before reordering." The reorder was an action based on the reasoning over the first observation.
+        That's the whole value proposition: the path is discovered, not declared.
+        The step cap matters: a confused or hallucinating agent will loop until you notice your bill.
+        Use it when the path is unknowable up front — debugging, incident response, live data investigation.
+        It hurts when the path is known or knowable: you pay per model call to rediscover a sequence you could write down once. That's Planning's job.
+      </aside>
+    </section>
+
+    <!-- ReAct · live demo -->
+    <section>
+      <p class="preheader">Live demo · ReAct against a real repository</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Real tools, a real bug, a real <span class="em text-gradient">fix</span></h2>
+      <div class="grid-2" style="grid-template-columns: 1.1fr 1fr; gap: 40px;">
+        <div class="stack">
+          <div class="card hurt">
+            <p class="card-eyebrow">The bug · shop/cart.py</p>
+            <pre style="font-size: 18px;"><code class="language-python" data-trim style="background: transparent; border: none; padding: 0;"><script type="text/template">
+taxed = add_gst(subtotal)
+if coupon is not None:
+    taxed = apply_coupon(taxed, coupon)
+return taxed
+            </script></code></pre>
+            <p class="mt-s" style="font-size: 20px;">A flat ₹100 coupon gets subtracted <em>after</em> 18% GST: <strong>₹1080</strong> instead of <strong>₹1062</strong>. Two of three tests pass — that's why it shipped.</p>
+          </div>
+          <div>
+            <p class="code-caption">Five real tools</p>
+            <span class="tag">run_tests()</span><span class="tag">list_files()</span><span class="tag">read_file()</span><span class="tag">grep()</span><span class="tag">apply_fix()</span>
+          </div>
+        </div>
+        <div class="card">
+          <p class="card-eyebrow">Watch for</p>
+          <ul class="list sm">
+            <li class="fragment fade-up">It starts from the real failure, not a guess about it</li>
+            <li class="fragment fade-up">It checks <code class="inline">pricing.py</code> before editing — the fix lands in the caller</li>
+            <li class="fragment fade-up">It re-runs the tests: "a fix I have not seen pass is not a fix"</li>
+            <li class="fragment fade-up">Then code re-runs them again, after the loop — not the agent's word for it</li>
+          </ul>
+          <p class="code-caption mt-m">Run it</p>
+          <div class="terminal" style="font-size: 18px; padding: 16px 20px;"><span class="t-dim">$</span> cd demo
+<span class="t-dim">$</span> STEP=1 python 03b_react_real_tools.py</div>
+        </div>
+      </div>
+      <aside class="notes">
+        [≈3:00, live] Switch to the terminal. Font size up (Cmd +) before the talk.
+        Setup: a tiny checkout package is written to a temp dir. It genuinely has a bug. The tools really run unittest, read files, and edit disk. Without an API key, only the model's decisions are replayed from a recording — every observation is real.
+        STEP=1 waits for Enter between steps, so narrate each one:
+        1 — run_tests: 2 passed, 1 failed. 1080 vs 1062. The traceback names the test, not the bug.
+        2–3 — list_files, read cart.py: the percent branch discounts first; the flat path taxes first.
+        4 — read pricing.py before editing: apply_coupon is order-agnostic, so the caller is wrong.
+        5 — apply_fix on cart.py. 6 — re-run: 3 passed.
+        Then "INDEPENDENT VERIFICATION": the code re-runs the suite after the loop exits. That's the closing lesson of the talk, previewed.
+        Mention assert_replay_premise(): a replay is only valid against the state it was recorded on — without that guard, a pre-fixed repo makes the agent "report a fix it never made".
+        Fallback if the terminal fails: the ReAct output slide already shows the same loop shape.
+      </aside>
+    </section>
+
+    <!-- Reflection · code -->
+    <section>
+      <p class="preheader">Pattern 04 · Reflection</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">One call does the work, another call <span class="em text-gradient">attacks</span> it</h2>
+      <pre><code class="language-python" data-trim data-line-numbers="|1-2|5|6-7|8-9|10-12"><script type="text/template">
+def lint(text):  # never pay a model to count characters
+    return [f"{len(text)} characters, limit is {LIMIT}"] if len(text) > LIMIT else []
+
+issues = []
+for round_no in range(3):  # the ceiling is code, the critic decides
+    draft = ask(f"{BRIEF}\nFix these issues: {issues or 'none'}",
+                system="Write the description only.")
+    verdict = ask(f"Brief: {BRIEF}\nDraft: {draft}\n\nReply PASS, or FAIL: <reason>.",
+                  system="You are a hostile reviewer. Find what is wrong.")
+    issues = lint(draft) + ([verdict] if verdict.startswith("FAIL") else [])
+    if not issues:
+        break
+      </script></code></pre>
+      <p class="body muted mt-m">Brief: meta description for a rechargeable trail headlamp, max 155 characters.</p>
+      <aside class="notes">
+        [23:30 – 25:00] Reflection: the first call produces the work, a second call with a different job attacks it.
+        lint() is plain Python — never pay a model to count characters.
+        Each round: write a draft that addresses the known issues, then a hostile reviewer judges it. Issues = lint failures + critic failures. No issues? Stop.
+        The loop runs until the critic is satisfied or the ceiling of 3 rounds is hit. Because the length isn't fixed, this is an autonomous pattern, not a two-step workflow.
+      </aside>
+    </section>
+
+    <!-- Reflection · output + when -->
+    <section>
+      <p class="preheader">Pattern 04 · Reflection</p>
+      <h2 class="h-title" style="margin-bottom: 30px;">Code checks the rules, the model judges the <span class="em text-gradient">quality</span></h2>
+      <div class="grid-2" style="gap: 28px;">
+        <div class="card hurt">
+          <p class="card-eyebrow">Round 1 · 190 characters</p>
+          <p class="muted" style="font-size: 20px;">"Discover the best-in-class TrailLight 2, a revolutionary rechargeable trail headlamp built for serious night runners, with a huge 40-hour burn time and an ultra-bright beam. Buy yours today."</p>
+          <p class="mt-s" style="font-size: 18px;"><span style="color: var(--color-rose);">lint:</span> 190 characters, limit is 155<br><span style="color: var(--color-rose);">critic:</span> 'best-in-class' is filler and the CTA is generic</p>
+        </div>
+        <div class="card use">
+          <p class="card-eyebrow">Round 2 · 126 characters</p>
+          <p style="font-size: 20px;">"TrailLight 2: a rechargeable trail headlamp with 40-hour burn time and a 400-lumen beam for night runs. See sizes and pricing."</p>
+          <p class="mt-s" style="font-size: 18px; color: var(--color-sea);">APPROVED</p>
+        </div>
+      </div>
+      <div class="grid-3 mt-m">
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Regex can do it? Code does it</p>
+          <p>Character counts, banned phrases, required keywords, schema validation.</p>
+        </div>
+        <div class="card use fragment fade-up">
+          <p class="card-eyebrow">Use it when</p>
+          <p>First drafts aren't good enough and failure modes are hard to specify up front</p>
+          <span class="tag">Code review</span><span class="tag">Vulnerability patching</span>
+        </div>
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">It hurts when</p>
+          <p>The judgement is deterministic. If a test suite can decide, run the tests — don't ask for an opinion.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [25:00 – 27:00] Round 1 failed twice: lint caught 190 characters against a limit of 155 with full reliability, and the critic caught "best-in-class" filler and a generic CTA. Round 2: 126 characters, specific numbers, approved.
+        Rule of thumb: anything a regex can do goes in code — character counts, banned words, required keywords, schema validation. Use the model only for judgement: is the CTA specific, is the claim quantified.
+        Give the critic a different job: find what's wrong. Don't make it redo the writer's work.
+        Use it when first drafts are insufficient or failure modes are hard to specify — code review, vulnerability patching.
+        It hurts when the judgement is deterministic. If tests can say whether the work is correct, run the tests.
+      </aside>
+    </section>
+
+    <!-- Collaboration · code -->
+    <section>
+      <p class="preheader">Pattern 05 · Collaboration</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 24px;">Specialists hand work to each other — no <span class="em text-gradient">manager</span></h2>
+      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-5|8|9-15|16-19"><script type="text/template">
+PEERS = {
+    "copywriter":   "You write short social copy.",
+    "art_director": "You turn copy into an image direction.",
+    "compliance":   "You check claims and reject unsupported ones.",
+}
+
+thread, peer = [], "copywriter"
+for handoff in range(8):  # the cycle guard belongs in code
+    reply = json.loads(ask(
+        "Campaign: spring launch for a refillable coffee cup.\n"
+        f"Thread so far: {thread or 'nothing yet'}\n\n"
+        f"Do your part, then pick who goes next ({', '.join(PEERS)}, or done).\n"
+        'JSON only: {"work": str, "to": str}',
+        system=PEERS[peer],
+    ))
+    thread.append(f"{peer}: {reply['work']}")
+    if reply["to"] == "done":
+        break
+    peer = reply["to"]  # note: a peer can hand work BACKWARDS
+      </script></code></pre>
+      <aside class="notes">
+        [27:00 – 28:30] Collaboration: specialist agents hand the work to each other. No manager, no supervisor.
+        Three peers: copywriter, art director, compliance.
+        Every peer sees the whole thread, does its part, and picks who goes next — as JSON.
+        range(8) is the cycle guard, in code. And the last line: a peer can hand work backwards.
+      </aside>
+    </section>
+
+    <!-- Collaboration · trace -->
+    <section>
+      <p class="preheader">Pattern 05 · Collaboration</p>
+      <h2 class="h-title" style="margin-bottom: 28px;">Handoff 3 proves the <span class="em text-gradient">pattern</span></h2>
+      <div class="trace">
+        <div class="trace-row"><span class="n">1</span><span class="who">copywriter</span><span>Headline: One cup. Every refill.</span><span class="to">→ art_director</span></div>
+        <div class="trace-row"><span class="n">2</span><span class="who">art_director</span><span>Overhead shot of one cup, faint coffee rings, morning light.</span><span class="to">→ compliance</span></div>
+        <div class="trace-row back fragment fade-up" data-fragment-index="1"><span class="n">3</span><span class="who">compliance</span><span>REJECTED: "plastic-free" is unsupported — the lid gasket is silicone.</span><span class="to">↩ copywriter</span></div>
+        <div class="trace-row fragment fade-up" data-fragment-index="2"><span class="n">4</span><span class="who">copywriter</span><span>Headline: Your 4th coffee of the day, same cup.</span><span class="to">→ art_director</span></div>
+        <div class="trace-row fragment fade-up" data-fragment-index="2"><span class="n">5</span><span class="who">art_director</span><span>2×2 grid: the same cup at four times of one workday.</span><span class="to">→ compliance</span></div>
+        <div class="trace-row done fragment fade-up" data-fragment-index="2"><span class="n">6</span><span class="who">compliance</span><span>APPROVED. Every claim is substantiated.</span><span class="to">✓ done</span></div>
+      </div>
+      <p class="body mt-m fragment fade-up" data-fragment-index="3"><strong>One rejection propagated through two peers.</strong> <span class="muted">A new headline invalidated the image direction too — and nothing scheduled that rework. A peer chose it mid-run.</span></p>
+      <aside class="notes">
+        [28:30 – 30:30] Six handoffs happened, but handoff 3 is where the pattern proves itself.
+        Look at handoffs 1–3 in isolation: copywriter, art director, compliance. That's indistinguishable from a hard-coded pipeline. If compliance had approved, you'd have no evidence you were looking at anything but three sequential stages.
+        [Advance] At handoff 3, compliance read the thread and sent the work back to the copywriter, who had already had a turn.
+        [Advance] The new headline also invalidated the image direction, so the art director ran again. One rejection propagated through two peers.
+        That backward handoff makes this a mesh and not a pipeline. Nothing scheduled the rework loop, and no supervisor was needed.
+      </aside>
+    </section>
+
+    <!-- Collaboration · when -->
+    <section>
+      <p class="preheader">Pattern 05 · Collaboration</p>
+      <h2 class="h-title">Freedom costs <span class="em text-gradient">cycles</span></h2>
+      <p class="lead" style="margin-bottom: 36px;">Compliance and the copywriter can bounce work between them forever. The guardrail doesn't have to be clever: a ceiling in code, or a cap on visits per peer.</p>
+      <div class="grid-2">
+        <div class="card use fragment fade-up">
+          <p class="card-eyebrow">Use it when</p>
+          <p>The work is a chain of specialists, and each handoff needs the previous specialist's output</p>
+          <span class="tag">Creative pipeline</span><span class="tag">Multi-stage routing</span>
+        </div>
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">It hurts when</p>
+          <p>You need one accountable answer — nobody in a mesh of specialists owns the outcome</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [30:30 – 31:30] The cost of that freedom is cycles. Compliance and copywriter could hand off to each other indefinitely. The guardrail can be as simple as a ceiling number in code, or a per-peer visit cap.
+        Use it for chains of specialists where each needs the previous output — creative pipelines, multi-stage routing.
+        It hurts when you need a single accountable answer, because nobody in the mesh owns the outcome. Which brings us to the Supervisor.
+      </aside>
+    </section>
+
+    <!-- Supervisor · code -->
+    <section>
+      <p class="preheader">Pattern 06 · Supervisor</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 24px;">One manager — workers see only their <span class="em text-gradient">assignment</span></h2>
+      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-5|7-12|9|14-18"><script type="text/template">
+plan = json.loads(ask(
+    f"Ticket: {TICKET}\n\nAssign work to {list(WORKERS)}.\n"
+    'JSON only: {"assign": [{"worker": str, "task": str}]}',
+    system=BOSS,
+))
+
+reports = {}
+for job in plan["assign"]:
+    reports[job["worker"]] = ask(
+        f"Ticket: {TICKET}\n\nYour task: {job['task']}",  # ENTIRE context
+        system=WORKERS[job["worker"]],
+    )
+
+answer = json.loads(ask(
+    f"Ticket: {TICKET}\nWorker reports: {reports}\n\n"
+    'Write the answer to the customer. JSON only: {"answer": str}',
+    system=BOSS,
+))["answer"]
+      </script></code></pre>
+      <p class="body muted mt-s">Ticket: charged twice in March since the SSO cutover, and unfamiliar login IP ranges — renewal in three weeks.</p>
+      <aside class="notes">
+        [31:30 – 33:00] Supervisor: one manager, workers that only see their assignment.
+        The ticket: an enterprise customer was charged twice since the SSO cutover, and security sees logins from unknown IP ranges. Renewal in three weeks.
+        Step 1: the boss assigns tasks to billing and platform workers.
+        Step 2: each worker gets the ticket plus its own task — that's its entire context.
+        Step 3: the boss combines the reports into one customer answer.
+      </aside>
+    </section>
+
+    <!-- Supervisor · isolation + when -->
+    <section>
+      <p class="preheader">Pattern 06 · Supervisor</p>
+      <h2 class="h-title" style="margin-bottom: 30px;">One f-string is the isolation <span class="em text-gradient">boundary</span></h2>
+      <div class="grid-2" style="grid-template-columns: 1.15fr 1fr; gap: 40px;">
+        <div>
+          <div class="terminal"><span class="t-sea">billing </span> Two charges four days apart. A duplicate
+          org entity was billed twice.
+<span class="t-sea">platform</span> SCIM still pointed at the old directory
+          and created a second org.
+
+<span class="t-lilac">RESOLUTION:</span> One misconfigured cutover created a
+duplicate org record. That single fault caused both
+the double invoice and the unfamiliar logins, which
+came from our own provisioning range.</div>
+          <ul class="list sm mt-m">
+            <li>Ticket plus own task — no sibling reports, no manager reasoning, no history</li>
+            <li>Small contexts; workers run in parallel</li>
+            <li>One worker's wrong guess can't become another worker's premise</li>
+          </ul>
+        </div>
+        <div class="stack">
+          <div class="card use fragment fade-up">
+            <p class="card-eyebrow">Use it when</p>
+            <p>The request splits into independent specialist questions, and someone must own the combined answer</p>
+            <span class="tag">Codebase understanding</span><span class="tag">Multi-analyst research</span>
+            <span class="tag">"Search these six subsystems"</span>
+          </div>
+          <div class="card hurt fragment fade-up">
+            <p class="card-eyebrow">It hurts when</p>
+            <p>Workers depend on each other. The supervisor carries every cross-cutting decision — if workers need each other's raw output, use Collaboration.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [33:00 – 34:30] The line doing the heavy lifting is the single f-string that builds the worker prompt. It's the isolation boundary: the ticket plus the worker's own task, and nothing else. No sibling reports, no manager reasoning, no history.
+        So every context stays small, workers can run in parallel, and one worker's wrong guess can't become another worker's premise.
+        The result: the supervisor connected two separate symptoms to one root cause.
+        The price: every cross-cutting decision happens in the supervisor. If two workers genuinely need each other's raw output, Collaboration fits better.
+        Use it when the request splits into independent specialist questions and someone must own the combined answer — codebase understanding, multi-analyst research.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════ CLOSING ═══════════════════════════ -->
+
+    <!-- Pairs -->
+    <section>
+      <p class="preheader">Read them in pairs</p>
+      <h2 class="h-title">The patterns teach more against each other than <span class="em text-gradient">alone</span></h2>
+      <div class="grid-3">
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Planning vs ReAct</p>
+          <h3>Same job shape, opposite control flow</h3>
+          <p>Planning fixes the order. ReAct discovers it on the go.</p>
+          <p class="muted mt-s" style="font-size: 19px;">Pick wrong and you either pay for non-determinism you didn't need, or run a stale plan.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Voting vs Reflection</p>
+          <h3>Multiple calls, opposite reasons</h3>
+          <p>Voting keeps reviewers apart: disagreement is a measurement.</p>
+          <p class="muted mt-s" style="font-size: 19px;">Reflection shows the output to the critic on purpose: the goal is improvement, not confidence.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <p class="card-eyebrow">Collaboration vs Supervisor</p>
+          <h3>The difference is context</h3>
+          <p>Collaboration shares the thread and allows backward handoffs.</p>
+          <p class="muted mt-s" style="font-size: 19px;">Supervisor isolates each worker, so one guess can't contaminate another.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [34:30 – 36:00] The fastest way to remember the patterns is in pairs.
+        Planning vs ReAct: same job shape, opposite control flow. Planning fixes the order, ReAct discovers it.
+        Voting vs Reflection: both make multiple calls, for opposite reasons. Voting isolates reviewers because disagreement is data. Reflection deliberately shows the critic the output because the goal is improvement.
+        Collaboration vs Supervisor: the difference is context. Shared thread and backward handoffs, versus strict isolation.
+      </aside>
+    </section>
+
+    <!-- Decision table -->
+    <section>
+      <p class="preheader">Choosing the pattern</p>
+      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">If this is true, use <span class="em text-gradient">this</span></h2>
+      <table class="epam">
+        <thead><tr><th>If this is true</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>You can write the steps down before you start</td><td>Planning</td></tr>
+          <tr><td>Being wrong is expensive, and judgement decides correctness</td><td>Voting</td></tr>
+          <tr><td>The next step depends on what the last step found</td><td>ReAct</td></tr>
+          <tr><td>First drafts aren't good enough, and the flaws are hard to pre-specify</td><td>Reflection</td></tr>
+          <tr><td>Specialists must pass real work between them, with rework</td><td>Collaboration</td></tr>
+          <tr><td>Independent specialist questions, one accountable answer</td><td>Supervisor</td></tr>
+          <tr class="kiss fragment fade-up"><td>None of the above clearly applies</td><td>A single model call. Seriously, KISS.</td></tr>
+        </tbody>
+      </table>
+      <aside class="notes">
+        [36:00 – 37:00] Here's the cheat sheet. Read the left column as a question about your problem, not your preferred framework.
+        [Advance] And the last row is not a joke. If none of these clearly applies, make a single model call. Keep it simple.
+      </aside>
+    </section>
+
+    <!-- Four checks -->
+    <section>
+      <p class="preheader">Before you reach for any pattern</p>
+      <h2 class="h-title">Four checks — one "no" means change the <span class="em text-gradient">design</span></h2>
+      <div class="grid-2" style="gap: 24px;">
+        <div class="card fragment fade-up"><p class="card-eyebrow">01</p><h3 style="margin: 0;">Is the task genuinely multi-step and hard to fully specify?</h3></div>
+        <div class="card fragment fade-up"><p class="card-eyebrow">02</p><h3 style="margin: 0;">Does the outcome justify the cost and latency?</h3></div>
+        <div class="card fragment fade-up"><p class="card-eyebrow">03</p><h3 style="margin: 0;">Do you actually need the model to do it?</h3></div>
+        <div class="card fragment fade-up"><p class="card-eyebrow">04</p><h3 style="margin: 0;">Can you catch errors, and can the app recover from them?</h3></div>
+      </div>
+      <p class="body muted mt-m">Source: Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents</a></p>
+      <aside class="notes">
+        [37:00 – 38:00] Four checks from Anthropic's own guidance on when to build an agent and when not to.
+        Is the task genuinely multi-step and hard to specify? Does the outcome justify cost and latency? Is the model actually needed? Can errors be caught and recovered from?
+        A single "no" means change your design. This one paragraph alone explains where most teams go wrong.
+      </aside>
+    </section>
+
+    <!-- Guardrails -->
+    <section>
+      <p class="preheader">The part nobody tells you</p>
+      <h2 class="h-title" style="margin-bottom: 30px;">A prompt is a request. Code is a <span class="em text-gradient">constraint.</span></h2>
+      <table class="epam">
+        <thead><tr><th>Pattern</th><th>Guardrails that belong in code</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Planning</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Validate the plan first; gate each step's artifact</td></tr>
+          <tr><td><strong>Voting</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The veto rule, the majority threshold, the escalation path</td></tr>
+          <tr><td><strong>ReAct</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The step cap, approval gates on tools</td></tr>
+          <tr><td><strong>Reflection</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Every deterministic check, the maximum round count</td></tr>
+          <tr><td><strong>Collaboration</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The handoff limit, per-peer visit limit, routing validation</td></tr>
+          <tr><td><strong>Supervisor</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The round ceiling, and the isolation boundary itself</td></tr>
+        </tbody>
+      </table>
+      <aside class="notes">
+        [38:00 – 38:45] Every pattern needs guardrails, and in every case they belong in code, not in a prompt. A prompt is a request; code is a constraint.
+        Quickly run down the table — you've already seen each of these in the examples.
+      </aside>
+    </section>
+
+    <!-- One-line guardrail -->
+    <section>
+      <p class="preheader">Most guardrails are one line</p>
+      <div class="grid-2" style="gap: 32px; margin-top: 40px;">
+        <div class="card use">
+          <p class="card-eyebrow">A real guardrail</p>
+          <pre style="font-size: 32px;"><code class="language-python" data-trim style="background: transparent; border: none; padding: 8px 0;"><script type="text/template">
+for step in range(6):
+          </script></code></pre>
+        </div>
+        <div class="card hurt">
+          <p class="card-eyebrow">Not a guardrail</p>
+          <p style="font-size: 32px; font-weight: 300; padding: 8px 0; font-family: var(--font-mono);">"Please don't loop forever."</p>
+        </div>
+      </div>
+      <p class="lead mt-l fragment fade-up">Don't trust an agent's summary of its own work. <strong style="color: var(--text-primary);">"Fixed and verified"</strong> is text, not evidence.</p>
+      <p class="lead mt-s fragment fade-up">If the outcome is checkable, check it in code: tests pass, the file exists, row counts match. This one habit catches more failures than any amount of prompt engineering.</p>
+      <aside class="notes">
+        [38:45 – 39:30] Notice how many guardrails are one line. `for step in range(6)` is a real guardrail. "Please don't loop forever" is not.
+        [Advance] One last habit worth building: never trust an agent's own summary of its work. An agent that says "Fixed and verified" is producing text, not evidence.
+        [Advance] If the outcome is checkable, check it yourself in code — tests passing, file exists, row counts matching. That single step catches more failures than any amount of prompt engineering.
+      </aside>
+    </section>
+
+    <!-- Thank you -->
+    <section data-background-gradient="radial-gradient(ellipse 55% 65% at 78% 50%, rgba(0,246,255,0.22) 0%, transparent 70%), radial-gradient(ellipse 38% 50% at 88% 58%, rgba(184,150,255,0.18) 0%, transparent 65%), #060606">
+      <div style="padding-top: 60px;">
+        <p class="preheader">Thank you</p>
+        <h2 class="h-hero">Start with the question, not the <span class="em text-gradient">framework</span></h2>
+        <p class="lead mt-m">Who decides what happens next — your code or the model?</p>
+        <div class="grid-2 mt-l" style="max-width: 1300px; align-items: center;">
+          <div class="qr">
+            <img src="static/linkedin-qr.png" alt="QR code for Vivek Keshore on LinkedIn">
+            <div class="body">
+              <strong>Vivek Keshore</strong><br>
+              <span class="muted">Software Architect, EPAM</span><br>
+              <span class="muted">Let's connect on LinkedIn</span>
+            </div>
+          </div>
+          <div class="qr">
+            <!-- Drop a QR for the article at static/article-qr.png; the image hides itself until then. -->
+            <img src="static/article-qr.png" alt="QR code for the article" onerror="this.remove()">
+            <div class="body">
+              <span class="muted">Full article and runnable code</span><br>
+              <a href="https://wearecommunity.io/communities/tectoniques/articles/8711">wearecommunity.io · TecToniques<br>article 8711</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [39:30 – 40:00] Recap in one sentence: start with the question, not the framework — who decides what happens next?
+        Point to both QR codes: LinkedIn, and the article with the full runnable code. Thank the audience and open for questions.
+      </aside>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600,
+    height: 900,
+    margin: 0.04,
+    center: false,
+    hash: true,
+    slideNumber: 'c/t',
+    showSlideNumber: 'speaker',
+    controls: true,
+    controlsTutorial: true,
+    progress: true,
+    transition: 'fade',
+    backgroundTransition: 'fade',
+    highlight: { highlightOnLoad: true },
+    plugins: [RevealHighlight, RevealNotes, RevealZoom],
+  });
+</script>
+</body>
+</html>

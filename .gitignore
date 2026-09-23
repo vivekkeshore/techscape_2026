@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.idea/
+.claude/
+.vercel/
+.DS_Store
+index_backup.html
+*.pdf

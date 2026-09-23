@@ -1,0 +1,2 @@
+# Only needed for AGENTIC_LLM=claude. The default mock backend is stdlib-only.
+anthropic>=0.116.0
