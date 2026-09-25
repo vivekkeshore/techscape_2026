@@ -23,7 +23,7 @@
       --color-night:  #060606;
       --color-snow:   #FBFAFA;
 
-      /* Secondary — accents only */
+      /* Secondary - accents only */
       --color-lime:   #D5E662;
       --color-leaf:   #00F4AB;
       --color-rose:   #FF4B9B;
@@ -56,9 +56,12 @@
       height: 100%;
       padding: 120px 80px 80px;
     }
+    /* Busy slides: start the content a little higher (still clear of the logo) */
+    .reveal .slides > section.lift { padding-top: 90px; }
     .reveal ::selection { background: var(--color-sea); color: var(--color-night); }
     .reveal a { color: var(--accent-1); font-weight: 900; text-decoration: none; }
     .reveal a:hover { text-decoration: underline; }
+    .reveal .link-text { color: var(--accent-1); font-weight: 900; }
     .reveal strong, .reveal b { font-weight: 900; }
 
     /* ─── Fixed chrome: logo, footer, slide number ─── */
@@ -87,7 +90,7 @@
     .reveal .slide-number {
       background: transparent;
       font-family: var(--font-primary);
-      font-size: 14px;
+      font-size: 20px;
       font-weight: 500;
       letter-spacing: 0.1em;
       color: var(--text-muted);
@@ -147,6 +150,96 @@
       line-height: 1.6;
     }
     .muted { color: var(--text-muted); }
+
+    /* Title slide: bigger type so it reads from the back of the room */
+    .title-slide .preheader { font-size: 28px; margin-bottom: 36px; }
+    .title-slide .h-hero { font-size: 128px; line-height: 1.05; }
+    .title-slide .body { font-size: 38px; line-height: 1.4; }
+
+    /* Show-of-hands slide: bigger type for the room */
+    .poll-slide .preheader { font-size: 26px; margin-bottom: 32px; }
+    .poll-slide .h-title { font-size: 76px; }
+    .poll-slide .poll-list { gap: 16px; max-width: 1440px; }
+    .poll-slide .poll { font-size: 34px; padding: 20px 32px; }
+    .poll-slide .lead { font-size: 36px; }
+
+    /* Map slide: bigger type for the room */
+    .map-slide .preheader { font-size: 26px; margin-bottom: 32px; }
+    .map-slide .h-title { font-size: 76px; }
+    .map-slide .tax-root { font-size: 34px; }
+    .map-slide .tax-branch h3 { font-size: 38px; }
+    .map-slide .tax-branch .who { font-size: 26px; }
+    .map-slide .tax-node { font-size: 27px; padding: 20px 12px; }
+    .map-slide .tax-node small { font-size: 16px; }
+
+    /* Two-families slide: bigger type for the room */
+    .families-slide .preheader { font-size: 26px; margin-bottom: 32px; }
+    .families-slide .h-title { font-size: 72px; }
+    .families-slide .card { padding: 28px 36px; }
+    .families-slide .card-eyebrow { font-size: 20px; }
+    .families-slide .card h3 { font-size: 36px; }
+    .reveal .families-slide ul.list.sm li { font-size: 28px; margin-bottom: 14px; }
+
+    /* Pattern slides: the pattern name is the heading, the takeaway sits under it */
+    .pattern-head { font-size: 64px; margin-bottom: 6px; }
+    .pattern-sub {
+      font-size: 30px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 22px;
+    }
+
+    /* Card-grid slides: bigger type for the room (add class="big-cards" to the section) */
+    .big-cards .grid-3 { grid-template-columns: 1fr 1fr 1.3fr; }
+    .big-cards .card { padding: 24px 28px; }
+    .big-cards .card-eyebrow { font-size: 20px; }
+    .big-cards .card p:not(.card-eyebrow):not(.crux) { font-size: 28px; line-height: 1.45; }
+    .reveal .big-cards ul.list.sm li { font-size: 28px; margin-bottom: 10px; }
+    .big-cards .tag { font-size: 22px; }
+    .big-cards .card p.card-note { font-size: 22px; }
+
+    /* The one line on a slide the audience must remember */
+    .reveal .crux {
+      padding: 14px 18px;
+      border-left: 4px solid var(--accent-1);
+      background: rgba(0, 246, 255, 0.08);
+      border-radius: 0 4px 4px 0;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+    }
+    .reveal .card .crux { margin-top: 22px; }
+
+    /* Voting code slide: bigger code, policy line called out below it */
+    .voting-code .pattern-sub { margin-bottom: 18px !important; }
+    .reveal .voting-code pre { font-size: 24px; line-height: 1.45; }
+    .reveal .voting-code pre code { padding: 16px 28px; max-height: none; }
+
+    /* Fill the slide height so a code block can sit centred in the space under the heading */
+    .slide-fill { display: flex; flex-direction: column; height: 100%; }
+    .code-stage { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .reveal .voting-code .crux { margin-top: 20px; font-size: 34px; padding: 14px 24px; }
+    /* Code follow-up slides: the key lines auto-animate in from the code slide, then the callout */
+    .reveal .code-focus .crux { margin-top: 24px; font-size: 34px; padding: 14px 24px; }
+
+    /* Examples inside "Use it when" / "It hurts when" cards take the card's accent colour */
+    .card.use .tag { color: var(--color-sea); border-color: var(--color-sea); }
+    .card.hurt .example { color: var(--color-rose); }
+    .card.hurt .tag { color: var(--color-rose); border-color: var(--color-rose); }
+
+    /* Most-expensive-mistake slide: short lines, built up one click at a time */
+    .mistake-slide .preheader { font-size: 26px; margin-bottom: 32px; }
+    .mistake-slide .h-title { font-size: 80px; margin-bottom: 36px; }
+    .mistake-slide .setup { font-size: 44px; font-weight: 300; letter-spacing: 0.02em; color: var(--text-muted); }
+    .mistake-slide .setup strong { color: var(--text-primary); }
+    .mistake-slide .punch { font-size: 104px; font-weight: 100; line-height: 1.1; margin: 12px 0 40px; }
+    .mistake-slide .punch .em { font-weight: 500; }
+    .mistake-slide .card-eyebrow { font-size: 22px; }
+    .mistake-slide .card p:not(.card-eyebrow) { font-size: 30px; line-height: 1.4; }
     .accent { color: var(--accent-1); }
 
     .text-gradient {
@@ -214,6 +307,45 @@
     .card.det  { border-top: 3px solid var(--color-sea); }
     .card.auto { border-top: 3px solid var(--color-lilac); }
 
+    /* Rule-of-thumb card: the rule is the headline, the checks are code chips */
+    .code-rule .card-eyebrow { color: var(--color-sea); }
+    .card p.rule-head { font-size: 30px; font-weight: 300; line-height: 1.25; letter-spacing: 0.02em; margin-bottom: 18px; }
+    .card p.rule-head strong { font-weight: 500; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: var(--color-sea);
+      background: rgba(0, 246, 255, 0.08);
+      border: 1px solid rgba(0, 246, 255, 0.35);
+    }
+
+    /* The input an example works on (brief, ticket): a labelled strip under the code */
+    .brief {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 14px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--color-lilac);
+      border-radius: 0 4px 4px 0;
+    }
+    .brief-label {
+      flex: none;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-lilac);
+    }
+    .brief-text { font-size: 26px; font-weight: 300; letter-spacing: 0.02em; line-height: 1.35; color: var(--text-muted); }
+    .brief-text strong { color: var(--text-primary); font-weight: 500; }
+    .brief-text strong.accent { color: var(--accent-1); }
+    .brief-sep { color: var(--color-lilac); margin: 0 6px; }
+
     .tag {
       display: inline-block;
       padding: 6px 14px;
@@ -225,7 +357,7 @@
       letter-spacing: 0.06em;
     }
 
-    /* Stat callouts — gradient is mandatory */
+    /* Stat callouts - gradient is mandatory */
     .stat-number {
       font-size: 150px;
       font-weight: 100;
@@ -289,7 +421,7 @@
       margin-bottom: 12px;
     }
 
-    /* highlight.js tokens — EPAM palette */
+    /* highlight.js tokens - EPAM palette */
     .hljs                  { color: var(--color-snow); background: transparent; }
     .hljs-comment,
     .hljs-quote            { color: rgba(251, 250, 250, 0.45); font-style: italic; }
@@ -405,6 +537,80 @@
     .vote.negotiate { border: 1.5px solid var(--color-sky);   color: var(--color-sky); }
     .vote.accept    { border: 1.5px solid var(--color-leaf);  color: var(--color-leaf); }
 
+    /* Voting output slide: bigger type for the room */
+    .votes-slide .card { padding: 32px 40px; }
+    .votes-slide .card-eyebrow { font-size: 22px; }
+    .votes-slide .votes { font-size: 36px; row-gap: 20px; }
+    .votes-slide .vote { font-size: 22px; padding: 6px 20px; align-self: center; }
+    .votes-slide .tally { font-size: 34px; }
+    .votes-slide .stack > * + * { margin-top: 44px; }
+    .votes-slide .point { font-size: 42px; line-height: 1.25; margin-bottom: 8px; }
+    .votes-slide .body { font-size: 34px; line-height: 1.4; color: var(--text-primary); }
+    .votes-slide .body strong { font-weight: 500; }
+    .votes-slide .body .warn { color: var(--color-rose); }
+
+    /* Voting "when" slide: tall cards, bigger type for the room */
+    .when-slide .pattern-sub { margin-bottom: 40px; }
+    .when-slide .card { min-height: 520px; padding: 40px 40px; }
+    .when-slide .card-eyebrow { font-size: 22px; margin-bottom: 24px; }
+    .when-slide .card p:not(.card-eyebrow):not(.stat-label):not(.example) { font-size: 36px; line-height: 1.35; }
+    .when-slide .card p.example { font-size: 28px; }
+    .when-slide .tag { font-size: 24px; padding: 8px 18px; margin-top: 20px; }
+    .when-slide .card.stat { display: flex; flex-direction: column; justify-content: center; }
+    .when-slide .stat-number { font-size: 260px; }
+    .when-slide .stat-label { font-size: 32px; line-height: 1.35; color: var(--text-primary); }
+    /* Reflection rounds slide: the drafts are the evidence, checks sit under each */
+    .rounds-slide .pattern-sub { margin-bottom: 40px; }
+    .rounds-slide .card { padding: 36px 40px; display: flex; flex-direction: column; align-items: flex-start; }
+    .rounds-slide .card-eyebrow { font-size: 22px; margin-bottom: 20px; }
+    .rounds-slide .card p.draft { font-size: 30px; line-height: 1.45; font-style: italic; font-weight: 300; }
+    .rounds-slide .card.hurt p.draft { color: var(--text-muted); }
+    .rounds-slide .checks { display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; margin: 28px 0 24px; font-size: 26px; }
+    .rounds-slide .checks .who { font-family: var(--font-mono); font-weight: 500; }
+    .rounds-slide .card.hurt .checks .who { color: var(--color-rose); }
+    .rounds-slide .card.use .checks .who { color: var(--color-sea); }
+    .rounds-slide .vote { font-size: 22px; padding: 6px 22px; margin-top: auto; }
+    .when-slide .chip { font-size: 22px; }
+    .when-slide .card p strong { font-weight: 500; }
+    .when-slide .card p .warn { color: var(--color-rose); }
+    .card.risk { border-top: 3px solid var(--color-papaya); }
+    /* Supervisor: the isolation boundary is the headline of the slide */
+    .reveal .crux.boundary { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; font-size: 38px; padding: 16px 28px; margin: 8px 0 28px; }
+    .reveal .crux.boundary strong { font-weight: 500; }
+    .reveal .crux.boundary code.inline { font-size: 22px; padding: 6px 14px; }
+    .iso-slide .terminal { font-size: 23px; line-height: 1.55; }
+    .reveal .iso-slide ul.list.sm li { font-size: 32px; line-height: 1.35; margin-bottom: 26px; }
+    .reveal .iso-slide ul.list.sm li strong { font-weight: 500; color: var(--text-primary); }
+    .when-slide .grid-2 .card { min-height: 480px; }
+
+    /* Pairs slide: each card is a face-off between two patterns */
+    .pairs-slide .h-title { font-size: 58px; margin-bottom: 32px; }
+    .pairs-slide .card.pair { display: flex; flex-direction: column; padding: 28px 32px; }
+    .pairs-slide .card-eyebrow { font-size: 20px; color: var(--text-primary); margin-bottom: 20px; }
+    .pairs-slide .side { display: flex; flex-direction: column; padding-left: 18px; border-left: 4px solid; }
+    .pairs-slide .side.det  { border-color: var(--color-sea); }
+    .pairs-slide .side.auto { border-color: var(--color-lilac); }
+    .pairs-slide .side .name { font-size: 36px; font-weight: 500; line-height: 1.2; }
+    .pairs-slide .side.det  .name { color: var(--color-sea); }
+    .pairs-slide .side.auto .name { color: var(--color-lilac); }
+    .pairs-slide .side .what { font-size: 27px; font-weight: 300; line-height: 1.3; }
+    .pairs-slide .vs { font-size: 18px; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin: 12px 0 12px 22px; }
+    .pairs-slide .card p.bottom { margin-top: auto; padding-top: 22px; font-size: 24px; line-height: 1.35; font-weight: 300; }
+    .pairs-slide .card p.bottom strong { font-weight: 500; color: var(--accent-1); }
+    .pairs-slide .card p.bottom strong.warn { color: var(--color-rose); }
+    .card.risk .card-eyebrow { color: var(--color-papaya); }
+    .reveal .when-slide ul.list.sm li { font-size: 34px; line-height: 1.3; margin-bottom: 16px; }
+
+    /* ReAct output slide: bigger type for the room */
+    .react-out .terminal { font-size: 25px; line-height: 1.55; padding: 24px 30px; }
+    .react-out .body { font-size: 32px; line-height: 1.4; }
+    .react-out .stack > * + * { margin-top: 18px; }
+    .react-out .card { padding: 20px 28px; }
+    .react-out .card-eyebrow { font-size: 20px; margin-bottom: 10px; }
+    .react-out .card p:not(.card-eyebrow) { font-size: 28px; line-height: 1.35; }
+    .react-out .tag { font-size: 21px; margin-top: 10px; }
+    .when-slide .stat-label strong { font-weight: 500; color: var(--color-rose); }
+
     /* Handoff trace */
     .trace { display: flex; flex-direction: column; gap: 10px; }
     .trace-row {
@@ -424,6 +630,19 @@
     .trace-row.back  { border-color: var(--color-rose); }
     .trace-row.back .to { color: var(--color-rose); }
     .trace-row.done .to { color: var(--color-leaf); }
+    /* Short takeaways under a trace, one per click */
+    .takeaways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .takeaways > div {
+      padding: 16px 22px;
+      background: var(--bg-card);
+      border-left: 4px solid var(--color-lilac);
+      border-radius: 0 4px 4px 0;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+    }
+    .takeaways strong { font-weight: 500; display: block; font-size: 30px; }
 
     /* Tables */
     .reveal table.epam {
@@ -451,6 +670,42 @@
     .reveal table.epam td:last-child { font-weight: 700; color: var(--accent-1); white-space: nowrap; }
     .reveal table.epam tr.kiss td { color: var(--text-primary); }
     .reveal table.epam tr.kiss td:last-child { color: var(--color-lilac); }
+    /* Decision table: the KISS row is the takeaway, so it sits below the table, big */
+    .kiss-callout {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 28px;
+      padding: 22px 36px;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background:
+        linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+        linear-gradient(90deg, #00FFF0 0%, #00F6FF 50%, #B896FF 100%) border-box;
+    }
+    .kiss-if {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-sea);
+      padding: 8px 18px;
+      border: 1.5px solid var(--color-sea);
+      border-radius: 100px;
+      background: rgba(0, 246, 255, 0.08);
+      align-self: flex-start;
+    }
+    .kiss-then { font-size: 50px; font-weight: 300; line-height: 1.15; }
+    .kiss-then strong { font-weight: 900; color: var(--color-lilac); }
+    /* One-line guardrail slide: the closing habit as short bullets */
+    .reveal ul.list.habit-list li { font-size: 34px; line-height: 1.35; margin-bottom: 20px; }
+    .reveal ul.list.habit-list li strong { font-weight: 500; color: var(--text-primary); }
+    .reveal ul.list.habit-list li strong.warn { color: var(--color-rose); }
+    .reveal ul.list.habit-list li strong.accent { color: var(--accent-1); }
+    .habit-list .chips { display: inline-flex; margin-left: 16px; vertical-align: middle; }
+    .habit-list .chip { font-size: 20px; }
+    .reveal ul.list.habit-list ul.sub { margin-top: 14px; }
+    .reveal ul.list.habit-list ul.sub li { font-size: 28px; margin-bottom: 0; }
 
     /* Audience poll */
     .poll-list { display: flex; flex-direction: column; gap: 14px; max-width: 1250px; }
@@ -463,15 +718,17 @@
       letter-spacing: 0.03em;
     }
 
-    /* QR codes — the source PNGs are colour on white, so keep a white mat */
+    /* QR codes - the source PNGs are colour on white, so keep a white mat */
     .qr {
       display: flex;
-      gap: 24px;
+      flex-direction: column;
+      gap: 18px;
       align-items: center;
+      text-align: center;
     }
     .qr img {
-      width: 170px;
-      height: 170px;
+      width: 360px;
+      height: 360px;
       padding: 10px;
       background: #FFFFFF;
       border-radius: 4px;
@@ -517,10 +774,9 @@
 
     <!-- 1 · Title -->
     <section data-background-gradient="radial-gradient(ellipse 55% 65% at 78% 50%, rgba(0,246,255,0.22) 0%, transparent 70%), radial-gradient(ellipse 38% 50% at 88% 58%, rgba(184,150,255,0.18) 0%, transparent 65%), radial-gradient(ellipse 32% 40% at 70% 65%, rgba(0,255,240,0.12) 0%, transparent 60%), #060606">
-      <div style="padding-top: 90px;">
+      <div class="title-slide" style="padding-top: 60px;">
         <p class="preheader">TechScape 2026 · Agentic AI</p>
-        <h1 class="h-hero">6 agentic AI design patterns:<br>which one to pick <span class="em text-gradient">when</span></h1>
-        <p class="lead mt-m">Who decides what happens next — your code or the model?</p>
+        <h1 class="h-hero">6 agentic AI design<br>patterns: which one<br>to pick <span class="em text-gradient">when</span></h1>
         <div class="mt-l body">
           <strong>Vivek Keshore</strong><br>
           <span class="muted">Software Architect, EPAM</span>
@@ -534,20 +790,21 @@
     </section>
 
     <!-- 2 · Show of hands -->
-    <section>
+    <section class="poll-slide">
       <p class="preheader">Show of hands</p>
       <h2 class="h-title" style="margin-bottom: 32px;">Every discussion now ends with <span class="em text-gradient">agents</span></h2>
       <div class="poll-list">
         <div class="poll fragment fade-up">Who has sat in a meeting that ended with <strong>"let's build an AI agent"</strong>?</div>
-        <div class="poll fragment fade-up">Who started that agent by picking a <strong>framework</strong>?</div>
-        <div class="poll fragment fade-up">Who has watched an agent <strong>loop</strong> — and found out from the bill?</div>
-        <div class="poll fragment fade-up">Who has shipped an agent that a <strong>single model call</strong> could have replaced?</div>
+        <div class="poll fragment fade-up">Who has seen an agent replying <strong>"fixed and verified"</strong>?</div>
+        <div class="poll fragment fade-up">Who has watched an agent <strong>loop</strong>, and found out from the bill?</div>
+        <div class="poll fragment fade-up">Who has shipped an agent that a <strong>single LLM call</strong> could have replaced?</div>
       </div>
       <p class="lead mt-m fragment fade-up">Hand up? <span class="accent">This talk is for you.</span></p>
       <aside class="notes">
         [1:30 – 3:00] Get the room engaged. Pause after each question and let the hands go up.
         We're in the age of agentic AI: every topic, every application ends with "let's make an agent".
-        The "found out from the bill" question usually gets a laugh — use it to build rapport.
+        The "found out from the bill" question usually gets a laugh - use it to build rapport.
+        Note roughly how many hands go up for "fixed and verified" - you call back to it near the end.
         The last question sets up the KISS row at the end of the talk.
         Pivot: the problem isn't building agents, it's how we start planning them.
       </aside>
@@ -555,11 +812,14 @@
 
     <!-- 3 · The wrong question -->
     <section>
-      <p class="preheader">The wrong question</p>
-      <div class="quote" style="font-size: 88px; font-weight: 100; border-left-color: var(--color-rose);">"LangGraph or <strong>CrewAI?</strong>"</div>
-      <p class="lead mt-l fragment fade-up">A framework choice tells you nothing about whether your app stays debuggable and maintainable.</p>
+      <h2 class="h-title" style="font-size: 84px; margin-bottom: 56px;">"Let's build an <span class="em text-gradient">Agent</span>"</h2>
+      <p class="preheader fragment fade-up" style="font-size: 26px; margin-bottom: 40px;">The First Question</p>
+      <div class="quote fragment fade-up" style="font-size: 124px; font-weight: 100; max-width: 1440px; border-left: 5px solid var(--color-rose); padding-left: 48px;">"CrewAI or <strong>LangGraph?</strong>"</div>
+      <p class="lead mt-l fragment fade-up" style="font-size: 44px; max-width: 1440px;">Framework Choice != debuggable & maintainable</p>
       <aside class="notes">
-        [3:00 – 4:00] This is how most agent projects start: picking a framework.
+        [3:00 – 4:00] Open on the line everyone has heard: "Let's build an agent."
+        [Advance] Ask: "What's the first question most teams ask next?" Let it hang for a beat.
+        [Advance] This is how most agent projects start: picking a framework.
         The framework is an implementation detail. It doesn't answer the design question that decides whether you can debug and maintain the thing six months later.
       </aside>
     </section>
@@ -567,16 +827,16 @@
     <!-- 4 · The right question -->
     <section data-background-gradient="radial-gradient(ellipse 55% 60% at 80% 55%, rgba(0,246,255,0.16) 0%, transparent 70%), radial-gradient(ellipse 35% 45% at 90% 60%, rgba(184,150,255,0.14) 0%, transparent 65%), #060606">
       <p class="preheader">The right question</p>
-      <h2 class="h-hero" style="font-size: 92px;">Who decides what happens next — your code or the <span class="em text-gradient">model?</span></h2>
-      <p class="lead mt-l fragment fade-up">Every agentic design pattern is an answer to this one question.</p>
+      <h2 class="h-hero" style="font-size: 92px;">Who decides what happens next? Your Code or the <span class="em text-gradient">model?</span></h2>
+      <p class="mt-l fragment fade-up" style="font-size: 50px; font-weight: 300; line-height: 1.35; letter-spacing: 0.02em; color: var(--text-primary); max-width: 1440px; padding: 24px 40px; border-left: 5px solid var(--accent-1); border-radius: 0 4px 4px 0; background: var(--bg-card);">Every agentic design pattern is an answer to <strong class="accent">this one question.</strong></p>
       <aside class="notes">
         [4:00 – 5:00] This is the core question of the talk. Pause on it.
-        Every pattern we'll see today answers it differently. If you remember one thing, remember this question — you can use it to classify any agent architecture you meet, including ones not in this talk.
+        Every pattern we'll see today answers it differently. If you remember one thing, remember this question - you can use it to classify any agent architecture you meet, including ones not in this talk.
       </aside>
     </section>
 
     <!-- 5 · The map -->
-    <section>
+    <section class="map-slide">
       <p class="preheader">The map</p>
       <h2 class="h-title" style="margin-bottom: 32px;">Two families, six <span class="em text-gradient">patterns</span></h2>
       <div class="taxonomy">
@@ -602,60 +862,75 @@
       </div>
       <aside class="notes">
         [5:00 – 6:30] The classification makes the six patterns easy to remember.
-        Left: deterministic workflows — Planning and Voting. Right: autonomous agents — ReAct, Reflection, Collaboration and Supervisor.
+        Left: deterministic workflows - Planning and Voting. Right: autonomous agents - ReAct, Reflection, Collaboration and Supervisor.
         The split follows the question we just asked: who owns the control flow.
       </aside>
     </section>
 
     <!-- 6 · Deterministic vs Autonomous -->
-    <section>
+    <section class="families-slide">
       <p class="preheader">Two families</p>
       <h2 class="h-title">Where does the execution path <span class="em text-gradient">live?</span></h2>
       <div class="grid-2">
         <div class="card det fragment fade-up">
           <p class="card-eyebrow" style="color: var(--color-sea);">Deterministic workflows</p>
-          <h3>The path lives in your source code</h3>
+          <h3>Source Code decides the path</h3>
           <ul class="list sm">
-            <li>Calls a model one or more times</li>
-            <li>You read the flow straight from the code</li>
-            <li>The same input takes the same route</li>
+            <li class="fragment fade-up">Model call - one or more times</li>
+            <li class="fragment fade-up">You read the flow straight from the code</li>
+            <li class="fragment fade-up">Same input, same control flow - the content can still vary</li>
           </ul>
         </div>
         <div class="card auto fragment fade-up">
           <p class="card-eyebrow" style="color: var(--color-lilac);">Autonomous agents</p>
           <h3>The LLM decides the path</h3>
           <ul class="list sm">
-            <li>The model picks tools, judges progress and chooses who goes next</li>
-            <li>Solves problems whose steps you can't know in advance</li>
-            <li>The same input may take a different route</li>
-            <li>Reproducibility becomes a challenge</li>
+            <li class="fragment fade-up">The model picks tools, judges progress and chooses who goes next</li>
+            <li class="fragment fade-up">Solves problems whose steps not known in advance</li>
+            <li class="fragment fade-up">Same Input may take a Different Route</li>
+            <li class="fragment fade-up">Reproducibility becomes a challenge</li>
           </ul>
         </div>
       </div>
       <aside class="notes">
-        [6:30 – 8:00] Walk through both columns.
+        [6:30 – 8:00] Walk through both columns. Nine clicks: each card appears with its heading, then its bullets one per click (3 left, 4 right).
         Deterministic: the model is a function you call; the "if/for/while" belongs to you. Rerun it and you get the same route.
-        Autonomous: the model decides which tool to call, whether the work is done, and who handles it next. That's what lets it solve open-ended problems — and it's also why reproducibility gets hard.
+        Autonomous: the model decides which tool to call, whether the work is done, and who handles it next. That's what lets it solve open-ended problems - and it's also why reproducibility gets hard.
       </aside>
     </section>
 
     <!-- 7 · The most expensive mistake -->
-    <section>
+    <section class="mistake-slide">
       <p class="preheader">The most expensive mistake</p>
-      <div class="quote">Neither family is more advanced. But picking <strong>autonomous</strong> where deterministic fits costs you twice — in tokens, and in non-determinism you never needed.</div>
+      <h2 class="h-title">Neither family is more advanced.</h2>
+      <p class="setup fragment fade-up">But pick <strong>autonomous</strong> where deterministic fits...</p>
+      <p class="punch fragment fade-up">...and you pay <span class="em text-gradient">twice.</span></p>
+      <div class="grid-2">
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">Once in tokens</p>
+          <p>Every loop, retry and tool call is billed.</p>
+        </div>
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">Once in non-determinism</p>
+          <p>Flaky tests and hard debugging you never needed.</p>
+        </div>
+      </div>
       <aside class="notes">
-        [8:00 – 9:00] This is the central warning. Autonomous is not "level 2" of deterministic. They are different tools.
-        Choosing autonomy you didn't need is the most expensive mistake: you pay in tokenomics, and you pay with non-determinism — harder debugging, flaky tests, surprising bills.
+        [8:00 – 9:00] This is the central warning. Say the headline slowly: neither family is more advanced. Autonomous is not "level 2" of deterministic. They are different tools.
+        [Advance] "But pick autonomous where deterministic fits..." - pause.
+        [Advance] "...and you pay twice." Let it land.
+        [Advance] Once in tokens: every loop, retry and tool call is on the bill.
+        [Advance] And once in non-determinism: harder debugging, flaky tests, surprising behaviour - none of which the problem needed.
       </aside>
     </section>
 
     <!-- 8 · Rules for the examples + llm.py -->
-    <section>
+    <section data-auto-animate>
       <p class="preheader">How to read the examples</p>
       <div class="grid-code">
         <div>
-          <p class="code-caption">llm.py — the whole abstraction</p>
-          <pre class="sm"><code class="language-python" data-trim data-line-numbers="|8-9|13-22"><script type="text/template">
+          <p class="code-caption">llm.py - the whole abstraction</p>
+          <pre class="sm" data-id="code-llm"><code class="language-python" data-trim data-line-numbers="|13-22"><script type="text/template">
 import os
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5")
@@ -682,21 +957,43 @@ def ask(prompt: str, system: str | None = None, stub: str = "") -> str:
         <div>
           <div class="card">
             <div class="stat-number text-gradient" style="font-size: 120px;">36–61</div>
-            <p class="stat-label">lines per example — complete, runnable, no framework</p>
+            <p class="stat-label">lines per example - complete, runnable, no framework</p>
           </div>
           <ul class="list sm mt-m">
             <li>Every pattern shares one helper: <code class="inline">ask()</code></li>
-            <li>No API key? <code class="inline">stub</code> returns mocked output — runs offline</li>
-            <li>Export <code class="inline">ANTHROPIC_API_KEY</code> to call the real model — no other changes</li>
+            <li>No API key? <code class="inline">stub</code> returns mocked output - runs offline</li>
+            <li>Export <code class="inline">ANTHROPIC_API_KEY</code> to call the real model - no other changes</li>
           </ul>
         </div>
       </div>
       <aside class="notes">
-        [9:00 – 11:00] Before the patterns: the ground rules.
-        Every example is complete and runnable in 36 to 61 lines, and shares this one helper. ask() takes a prompt and returns a string — that's the whole abstraction. No frameworks.
-        The stub argument is mocked output returned when no API key is set, so every example runs offline. The point is to learn the pattern, not to ship an app. Export ANTHROPIC_API_KEY and the same code calls Claude.
+        [9:00 – 10:30] Before the patterns: the ground rules.
+        Every example is complete and runnable in 36 to 61 lines, and shares this one helper. No frameworks.
+        [Advance] The real call: export ANTHROPIC_API_KEY and the same code calls Claude.
         Transparency: Claude Opus 5 generated the examples from my specs and instructions, and I reviewed them and edited them by hand.
-        On the code slides, the stub arguments are left out so the pattern stands out — the full versions are in the article.
+        [Advance] The code animates into the next slide - the signature and the stub.
+      </aside>
+    </section>
+
+    <!-- 8b · llm.py signature + stub (auto-animates from the llm.py slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <p class="preheader">How to read the examples</p>
+        <div class="code-stage">
+          <pre class="sm" data-id="code-llm"><code class="language-python" data-trim data-line-numbers="|1|3-4" data-ln-start-from="6"><script type="text/template">
+def ask(prompt: str, system: str | None = None, stub: str = "") -> str:
+    """One prompt in, one string out."""
+    if not API_KEY:
+        return stub
+          </script></code></pre>
+          <p class="crux fragment fade-up">One prompt in, one string out - <strong class="accent">that's the whole abstraction</strong>.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [10:30 – 11:00] ask() takes a prompt and returns a string.
+        [Advance] No API key? The stub argument is mocked output, so every example runs offline. The point is to learn the pattern, not to ship an app.
+        [Advance] The callout: that's the whole abstraction.
+        On the code slides, the stub arguments are left out so the pattern stands out - the full versions are in the article.
       </aside>
     </section>
 
@@ -709,15 +1006,15 @@ def ask(prompt: str, system: str | None = None, stub: str = "") -> str:
         <h2 class="h-hero" style="font-size: 88px;">Deterministic workflows: code controls the <span class="em text-gradient">execution</span></h2>
       </div>
       <aside class="notes">
-        [11:00] Part 1 — the two patterns where your code owns the control flow: Planning and Voting.
+        [11:00] Part 1 - the two patterns where your code owns the control flow: Planning and Voting.
       </aside>
     </section>
 
     <!-- Planning · concept + code -->
-    <section>
-      <p class="preheader">Pattern 01 · Planning</p>
-      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Ask for a plan once, then <span class="em text-gradient">execute</span> it in a loop</h2>
-      <pre><code class="language-python" data-trim data-line-numbers="|1-7|9-13|15|17-20"><script type="text/template">
+    <section data-auto-animate>
+      <h2 class="h-title pattern-head">Pattern 01 · <span class="em text-gradient">Planning</span></h2>
+      <p class="pattern-sub">Ask for a plan once, then execute it in a loop</p>
+      <pre data-id="code-planning"><code class="language-python" data-trim data-line-numbers="|1-7|9-13"><script type="text/template">
 def make_plan(goal):
     reply = ask(
         f'Break this into 3 ordered steps. JSON only: {{"steps": [str]}}'
@@ -740,18 +1037,42 @@ for i, step in enumerate(steps, 1):  # The model has no say.
     done.append(step)
       </script></code></pre>
       <aside class="notes">
-        [11:00 – 13:00] Planning: ask the model for a plan, then execute it in a loop.
+        [11:00 – 12:30] Planning: ask the model for a plan, then execute it in a loop.
         make_plan: one call returns three ordered steps as JSON. That one call decides the shape of all the work.
-        build: each step is a separate call with a small brief — what's already done, and exactly this one step.
-        The for loop: the model has no say in the order. The code owns it.
-        Output: PLAN: design the data model, write the endpoints, add tests — then 1/3, 2/3, 3/3.
+        build: each step is a separate call with a small brief - what's already done, and exactly this one step.
+        [Advance] The code animates into the next slide - the plan call and the loop.
+      </aside>
+    </section>
+
+    <!-- Planning · the loop (auto-animates from the code slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 01 · <span class="em text-gradient">Planning</span></h2>
+        <div class="code-stage">
+          <pre data-id="code-planning"><code class="language-python" data-trim data-line-numbers="|1|3-6" data-ln-start-from="15"><script type="text/template">
+steps = make_plan("Ship a REST API for expense reports")  # ONE call shapes all the work
+
+done = []
+for i, step in enumerate(steps, 1):  # The model has no say.
+    print(f"[{i}/{len(steps)}] {step}\n  {build(step, done)}")
+    done.append(step)
+          </script></code></pre>
+          <p class="crux fragment fade-up">The model writes the plan. The <strong class="accent">code</strong> runs it.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [12:30 – 13:00] One call shapes all the work: make_plan.
+        [Advance] The for loop: the model has no say in the order. The code owns it.
+        [Advance] The callout: the model writes the plan, the code runs it.
+        If asked "isn't the plan different every run?": yes - the plan's content varies, but its execution doesn't. The model can't skip, add, reorder or loop back. Need the same plan every time? Freeze it: review it, save it as a spec, and replay it.
+        Output: PLAN: design the data model, write the endpoints, add tests - then 1/3, 2/3, 3/3.
       </aside>
     </section>
 
     <!-- Planning · why it works + when -->
-    <section>
-      <p class="preheader">Pattern 01 · Planning</p>
-      <h2 class="h-title" style="margin-bottom: 32px;">Every failure stays <span class="em text-gradient">local</span></h2>
+    <section class="big-cards">
+      <h2 class="h-title pattern-head">Pattern 01 · <span class="em text-gradient">Planning</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 32px;">Every failure stays local</p>
       <div class="grid-3">
         <div class="card fragment fade-up">
           <p class="card-eyebrow">Why it works</p>
@@ -768,7 +1089,7 @@ for i, step in enumerate(steps, 1):  # The model has no say.
             <li>Do the tests pass?</li>
             <li>Does the app compile and run?</li>
           </ul>
-          <p class="muted mt-s" style="font-size: 18px;">A failed gate retries one step, not the whole run.</p>
+          <p class="crux">A failed gate retries <strong class="accent">one step</strong>, not the whole run.</p>
         </div>
         <div class="stack">
           <div class="card use fragment fade-up">
@@ -779,52 +1100,73 @@ for i, step in enumerate(steps, 1):  # The model has no say.
           </div>
           <div class="card hurt fragment fade-up">
             <p class="card-eyebrow">It hurts when</p>
-            <p>The next step depends on what the last one found. A fixed plan can't react — it confidently runs a stale plan.</p>
+            <p>The next step depends on what the last one found.</p>
+            <p class="example mt-s">A fixed plan can't react - it confidently runs a stale plan.</p>
           </div>
         </div>
       </div>
       <aside class="notes">
-        [13:00 – 15:00] The plan comes first — it can even be a spec document.
+        [13:00 – 15:00] The plan comes first - it can even be a spec document.
         Each step gets a small brief, which keeps context small. Failures are localised: if step three produces garbage, you rerun step three only.
         Real implementations add a dependency graph and a checkpoint after each step: does the artifact exist, do tests pass, does it compile and run. A failed checkpoint retries one step instead of restarting everything.
-        Use it when you know the scope — a weekly report always has the same sections, a scaffold always needs a data model before an API.
+        Use it when you know the scope - a weekly report always has the same sections, a scaffold always needs a data model before an API.
         It hurts when step N+1 genuinely depends on what step N discovered. A fixed plan can't react, so it confidently executes a stale plan.
       </aside>
     </section>
 
     <!-- Voting · code -->
-    <section>
-      <p class="preheader">Pattern 02 · Voting / Consensus</p>
-      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Ask several times independently — let the <span class="em text-gradient">code</span> decide</h2>
-      <pre><code class="language-python" data-trim data-line-numbers="|1-2|4-8|10-11|13-15"><script type="text/template">
+    <section class="voting-code" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 02 · <span class="em text-gradient">Voting / Consensus</span></h2>
+        <p class="pattern-sub" style="margin-bottom: 28px;">Ask several times independently - let the code decide</p>
+        <div class="code-stage">
+          <pre data-id="code-voting"><code class="language-python" data-trim data-line-numbers="|1-2|3-7|8-9"><script type="text/template">
 CLAUSE = "Vendor's liability is unlimited. The contract auto-renews for 24 months."
 LENSES = ["liability", "privacy", "finance", "commercial", "regulatory"]
-
 def review(lens):
     return ask(
         f"Clause: {CLAUSE}\n\nReply with one word: BLOCK, NEGOTIATE or ACCEPT.",
         system=f"You review contracts through one lens only: {lens}.",
     ).upper()
-
 with ThreadPoolExecutor() as pool:  # independent calls
     votes = list(pool.map(review, LENSES))
-
 tally = Counter(votes)
 top, count = tally.most_common(1)[0]
-decision = top if count >= 3 else "ESCALATE"  # the policy is code, not a prompt
-      </script></code></pre>
+decision = top if count >= 3 else "ESCALATE"
+        </script></code></pre>
+        </div>
+      </div>
       <aside class="notes">
-        [15:00 – 16:30] Voting: ask several times independently, then let code decide what the answers mean.
+        [15:00 – 16:00] Voting: ask several times independently, then let code decide what the answers mean.
         One contract clause, five reviewers, each with a single lens: liability, privacy, finance, commercial, regulatory.
-        They run in parallel in a thread pool — independent calls. Multiprocessing works too.
-        The last line is the important one: the decision policy — three or more agreeing, otherwise escalate — is code, not a prompt.
+        They run in parallel in a thread pool - independent calls. Multiprocessing works too.
+        [Advance] The code animates into the next slide - the last three lines are the ones that matter.
+      </aside>
+    </section>
+
+    <!-- Voting · policy is code (auto-animates from the code slide) -->
+    <section class="voting-code" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 02 · <span class="em text-gradient">Voting / Consensus</span></h2>
+        <div class="code-stage">
+          <pre data-id="code-voting"><code class="language-python" data-trim data-line-numbers data-ln-start-from="10"><script type="text/template">
+tally = Counter(votes)
+top, count = tally.most_common(1)[0]
+decision = top if count >= 3 else "ESCALATE"
+        </script></code></pre>
+          <p class="crux fragment fade-up">The policy is <strong class="accent">code</strong>, not a prompt.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [16:00 – 16:30] The decision policy - three or more agreeing, otherwise escalate - is code, not a prompt.
+        [Advance] The callout appears: "The policy is code, not a prompt." Pause on it - you can test it, version it and audit it; a prompt you can only hope about.
       </aside>
     </section>
 
     <!-- Voting · output -->
-    <section>
-      <p class="preheader">Pattern 02 · Voting / Consensus</p>
-      <h2 class="h-title" style="margin-bottom: 36px;">Disagreement is a result, not a <span class="em text-gradient">problem</span></h2>
+    <section class="votes-slide">
+      <h2 class="h-title pattern-head">Pattern 02 · <span class="em text-gradient">Voting / Consensus</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 36px;">Disagreement is a result, not a problem</p>
       <div class="grid-2" style="grid-template-columns: 1fr 1.3fr; gap: 48px;">
         <div class="card">
           <p class="card-eyebrow">Five lenses, one clause</p>
@@ -835,19 +1177,19 @@ decision = top if count >= 3 else "ESCALATE"  # the policy is code, not a prompt
             <span>commercial</span> <span class="vote negotiate">NEGOTIATE</span>
             <span>regulatory</span> <span class="vote accept">ACCEPT</span>
           </div>
-          <p class="mt-m" style="font-size: 22px;"><span class="muted">tally</span> 1 : 2 : 2 &nbsp;→&nbsp; <strong class="accent">ESCALATE</strong></p>
+          <p class="tally mt-m"><span class="muted">tally</span> 1 : 2 : 2 &nbsp;→&nbsp; <strong class="accent">ESCALATE</strong></p>
         </div>
         <div class="stack">
           <div class="fragment fade-up">
-            <p class="h-light" style="font-size: 30px;"><strong>1. Reviewers must never see each other's answers.</strong></p>
-            <p class="body muted">The moment they can, their errors correlate and they converge on one opinion.</p>
+            <p class="h-light point"><strong>1. Reviewers never see each other's answers.</strong></p>
+            <p class="body">Otherwise: <strong class="warn">five copies of one opinion</strong>.</p>
           </div>
           <div class="fragment fade-up">
-            <p class="h-light" style="font-size: 30px;"><strong>2. Never break the tie.</strong></p>
-            <p class="body muted">One call gives you confidence. Five calls give you a distribution — 3:2, 2:2:1. Escalating to a human or another agent is the feature; forcing a tie-break throws away the only information the pattern produces.</p>
+            <p class="h-light point"><strong>2. Never break the tie.</strong></p>
+            <p class="body">1 : 2 : 2 is the answer - <strong class="accent">escalate it</strong>.</p>
           </div>
           <div class="fragment fade-up">
-            <p class="body"><span class="accent">Policies live in code:</span> a BLOCK from the liability reviewer can veto regardless of the count.</p>
+            <p class="body"><span class="accent">Policies live in code:</span> a liability BLOCK can veto any count.</p>
           </div>
         </div>
       </div>
@@ -861,28 +1203,31 @@ decision = top if count >= 3 else "ESCALATE"  # the policy is code, not a prompt
     </section>
 
     <!-- Voting · when -->
-    <section>
-      <p class="preheader">Pattern 02 · Voting / Consensus</p>
-      <h2 class="h-title">Buy confidence only when being wrong is <span class="em text-gradient">expensive</span></h2>
+    <section class="when-slide">
+      <h2 class="h-title pattern-head">Pattern 02 · <span class="em text-gradient">Voting / Consensus</span></h2>
+      <p class="pattern-sub">Buy confidence only when being wrong is expensive</p>
       <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; align-items: stretch;">
-        <div class="card use">
+        <div class="card use fragment fade-up">
           <p class="card-eyebrow">Use it when</p>
-          <p>Being wrong is expensive, and judgement or rules in code can check correctness</p>
+          <p>A wrong answer is costly, and code or judgement can check it</p>
           <span class="tag">Compliance review</span>
           <span class="tag">Medical triage</span>
         </div>
-        <div class="card hurt">
+        <div class="card hurt fragment fade-up">
           <p class="card-eyebrow">It hurts when</p>
           <p>Cost matters more than confidence</p>
+          <span class="tag">Chat replies</span>
+          <span class="tag">Autocomplete</span>
         </div>
-        <div class="card">
+        <div class="card stat fragment fade-up">
           <div class="stat-number text-gradient">5×</div>
-          <p class="stat-label">the price of a single call — every time</p>
+          <p class="stat-label">the price of a single call - <strong>every run</strong></p>
         </div>
       </div>
       <aside class="notes">
-        [18:30 – 19:30] Use voting when a wrong answer is expensive — compliance review, medical triage.
-        Don't use it when cost matters more than confidence: this example costs five times a single call on every run.
+        [18:30 – 19:30] [Advance] Use voting when a wrong answer is expensive - compliance review, medical triage.
+        [Advance] Don't use it when cost matters more than confidence - high-volume, low-stakes calls like chat replies or autocomplete.
+        [Advance] This example costs five times a single call on every run.
         That wraps up the deterministic family.
       </aside>
     </section>
@@ -896,20 +1241,20 @@ decision = top if count >= 3 else "ESCALATE"  # the policy is code, not a prompt
         <h2 class="h-hero" style="font-size: 88px;">Autonomous agents: the LLM controls the <span class="em text-gradient">execution</span></h2>
       </div>
       <aside class="notes">
-        [19:30] Part 2 — four patterns where the model owns at least part of the control flow: ReAct, Reflection, Collaboration, Supervisor.
+        [19:30] Part 2 - four patterns where the model owns at least part of the control flow: ReAct, Reflection, Collaboration, Supervisor.
       </aside>
     </section>
 
     <!-- ReAct · code -->
-    <section>
-      <p class="preheader">Pattern 03 · ReAct</p>
+    <section data-auto-animate>
+      <h2 class="h-title pattern-head" style="margin-bottom: 22px;">Pattern 03 · <span class="em text-gradient">ReAct</span></h2>
       <div class="flow" style="margin-bottom: 26px;">
         <span class="flow-node">Think</span><span class="flow-arrow">→</span>
         <span class="flow-node">Pick a tool</span><span class="flow-arrow">→</span>
         <span class="flow-node">Read the output</span><span class="flow-arrow">→</span>
         <span class="flow-node alt">Think again ↺</span>
       </div>
-      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-4|6-9|12|13-15|16-18"><script type="text/template">
+      <pre class="sm" data-id="code-react"><code class="language-python" data-trim data-line-numbers="|1-4|5-8"><script type="text/template">
 TOOLS = {
     "check_stock": lambda sku: f"{sku}: {STOCK.get(sku, 0)} units on hand",
     "reorder":     lambda sku, qty: f"created a PO for {qty} units of {sku}",
@@ -929,17 +1274,40 @@ for step in range(6):  # the step cap belongs in code, not the prompt
     transcript += f"\n{reply}\nObservation: {result}"
       </script></code></pre>
       <aside class="notes">
-        [19:30 – 21:30] ReAct = Reason + Act. It's a loop: the model thinks, picks a tool, reads the output, thinks again.
+        [19:30 – 21:00] ReAct = Reason + Act. It's a loop: the model thinks, picks a tool, reads the output, thinks again.
         Two tools: check_stock and reorder. The system prompt defines a tiny protocol: emit either "Action: tool(args)" or "Done: answer".
-        The loop: ask, stop on Done, otherwise parse the action, run the tool, and append the observation to the transcript.
-        Note the range(6) — the step cap lives in code, not in the prompt.
+        [Advance] The code animates into the next slide - the loop.
+      </aside>
+    </section>
+
+    <!-- ReAct · the loop (auto-animates from the code slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head" style="margin-bottom: 22px;">Pattern 03 · <span class="em text-gradient">ReAct</span></h2>
+        <div class="code-stage">
+          <pre class="sm" data-id="code-react"><code class="language-python" data-trim data-line-numbers="|1|2-4|5-7" data-ln-start-from="11"><script type="text/template">
+for step in range(6):  # the step cap belongs in code, not the prompt
+    reply = ask(transcript, system=SYSTEM)
+    if reply.startswith("Done:"):
+        break
+    name, raw = re.match(r"Action:\s*(\w+)\((.*)\)", reply).groups()
+    result = TOOLS[name](*[a.strip() for a in raw.split(",") if a.strip()])
+    transcript += f"\n{reply}\nObservation: {result}"
+          </script></code></pre>
+          <p class="crux fragment fade-up">The model picks each action. The <strong class="accent">code</strong> caps the steps.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [21:00 – 21:30] The loop: ask, stop on Done, otherwise parse the action, run the tool, and append the observation to the transcript.
+        Note the range(6) - the step cap lives in code, not in the prompt.
+        [Advance after the last code step] The callout: the model picks each action, the code caps the steps.
       </aside>
     </section>
 
     <!-- ReAct · output + when -->
-    <section>
-      <p class="preheader">Pattern 03 · ReAct</p>
-      <h2 class="h-title" style="margin-bottom: 30px;">The path is discovered, not <span class="em text-gradient">declared</span></h2>
+    <section class="react-out lift">
+      <h2 class="h-title pattern-head">Pattern 03 · <span class="em text-gradient">ReAct</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 30px;">The path is discovered, not declared</p>
       <div class="grid-2" style="grid-template-columns: 1.2fr 1fr; gap: 40px;">
         <div>
           <div class="terminal"><span class="t-sea">Action:</span> check_stock(SKU-4417)
@@ -950,36 +1318,37 @@ for step in range(6):  # the step cap belongs in code, not the prompt
 
 <span class="t-leaf">Done:</span> Only 6 units were left before a promo,
       so I ordered 120 more.</div>
-          <p class="body mt-m">The loop decides almost nothing: parse, run, append, repeat. Nothing in the code says <em>"check stock before reordering."</em></p>
+          <p class="body mt-m">No line of code says <strong class="accent">"check stock first"</strong>. The model chose it.</p>
         </div>
         <div class="stack">
           <div class="card fragment fade-up" style="border-top: 3px solid var(--color-papaya);">
             <p class="card-eyebrow" style="color: var(--color-papaya);">The step cap</p>
-            <p>A confused or hallucinating agent loops until you notice your bill.</p>
+            <p>Without it, a confused agent loops until you see the bill.</p>
           </div>
           <div class="card use fragment fade-up">
             <p class="card-eyebrow">Use it when</p>
             <p>You can't know the path in advance</p>
-            <span class="tag">Debugging, incident response</span>
-            <span class="tag">Live data, e.g. ticker prices</span>
+            <span class="tag">Debugging</span>
+            <span class="tag">Incident response</span>
+            <span class="tag">Live ticker prices</span>
           </div>
           <div class="card hurt fragment fade-up">
             <p class="card-eyebrow">It hurts when</p>
-            <p>The path is known or knowable — you pay per call to rediscover a sequence you could write down once</p>
+            <p>The path is knowable - you pay to rediscover it on every run</p>
           </div>
         </div>
       </div>
       <aside class="notes">
-        [21:30 – 23:30] Look at what happened. The model checked stock, saw 6 units, then reordered 120. No line of code said "check stock before reordering." The reorder was an action based on the reasoning over the first observation.
+        [21:30 – 23:30] Look at what happened. The loop decides almost nothing: parse, run, append, repeat. The model checked stock, saw 6 units, then reordered 120. No line of code said "check stock before reordering." The reorder was an action based on the reasoning over the first observation.
         That's the whole value proposition: the path is discovered, not declared.
         The step cap matters: a confused or hallucinating agent will loop until you notice your bill.
-        Use it when the path is unknowable up front — debugging, incident response, live data investigation.
+        Use it when the path is unknowable up front - debugging, incident response, live data investigation.
         It hurts when the path is known or knowable: you pay per model call to rediscover a sequence you could write down once. That's Planning's job.
       </aside>
     </section>
 
-    <!-- ReAct · live demo -->
-    <section>
+    <!-- ReAct · live demo (hidden - remove data-visibility to bring it back) -->
+    <section data-visibility="hidden">
       <p class="preheader">Live demo · ReAct against a real repository</p>
       <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">Real tools, a real bug, a real <span class="em text-gradient">fix</span></h2>
       <div class="grid-2" style="grid-template-columns: 1.1fr 1fr; gap: 40px;">
@@ -992,7 +1361,7 @@ if coupon is not None:
     taxed = apply_coupon(taxed, coupon)
 return taxed
             </script></code></pre>
-            <p class="mt-s" style="font-size: 20px;">A flat ₹100 coupon gets subtracted <em>after</em> 18% GST: <strong>₹1080</strong> instead of <strong>₹1062</strong>. Two of three tests pass — that's why it shipped.</p>
+            <p class="mt-s" style="font-size: 20px;">A flat ₹100 coupon gets subtracted <em>after</em> 18% GST: <strong>₹1080</strong> instead of <strong>₹1062</strong>. Two of three tests pass - that's why it shipped.</p>
           </div>
           <div>
             <p class="code-caption">Five real tools</p>
@@ -1003,9 +1372,9 @@ return taxed
           <p class="card-eyebrow">Watch for</p>
           <ul class="list sm">
             <li class="fragment fade-up">It starts from the real failure, not a guess about it</li>
-            <li class="fragment fade-up">It checks <code class="inline">pricing.py</code> before editing — the fix lands in the caller</li>
+            <li class="fragment fade-up">It checks <code class="inline">pricing.py</code> before editing - the fix lands in the caller</li>
             <li class="fragment fade-up">It re-runs the tests: "a fix I have not seen pass is not a fix"</li>
-            <li class="fragment fade-up">Then code re-runs them again, after the loop — not the agent's word for it</li>
+            <li class="fragment fade-up">Then code re-runs them again, after the loop - not the agent's word for it</li>
           </ul>
           <p class="code-caption mt-m">Run it</p>
           <div class="terminal" style="font-size: 18px; padding: 16px 20px;"><span class="t-dim">$</span> cd demo
@@ -1014,23 +1383,23 @@ return taxed
       </div>
       <aside class="notes">
         [≈3:00, live] Switch to the terminal. Font size up (Cmd +) before the talk.
-        Setup: a tiny checkout package is written to a temp dir. It genuinely has a bug. The tools really run unittest, read files, and edit disk. Without an API key, only the model's decisions are replayed from a recording — every observation is real.
+        Setup: a tiny checkout package is written to a temp dir. It genuinely has a bug. The tools really run unittest, read files, and edit disk. Without an API key, only the model's decisions are replayed from a recording - every observation is real.
         STEP=1 waits for Enter between steps, so narrate each one:
-        1 — run_tests: 2 passed, 1 failed. 1080 vs 1062. The traceback names the test, not the bug.
-        2–3 — list_files, read cart.py: the percent branch discounts first; the flat path taxes first.
-        4 — read pricing.py before editing: apply_coupon is order-agnostic, so the caller is wrong.
-        5 — apply_fix on cart.py. 6 — re-run: 3 passed.
+        1 - run_tests: 2 passed, 1 failed. 1080 vs 1062. The traceback names the test, not the bug.
+        2–3 - list_files, read cart.py: the percent branch discounts first; the flat path taxes first.
+        4 - read pricing.py before editing: apply_coupon is order-agnostic, so the caller is wrong.
+        5 - apply_fix on cart.py. 6 - re-run: 3 passed.
         Then "INDEPENDENT VERIFICATION": the code re-runs the suite after the loop exits. That's the closing lesson of the talk, previewed.
-        Mention assert_replay_premise(): a replay is only valid against the state it was recorded on — without that guard, a pre-fixed repo makes the agent "report a fix it never made".
+        Mention assert_replay_premise(): a replay is only valid against the state it was recorded on - without that guard, a pre-fixed repo makes the agent "report a fix it never made".
         Fallback if the terminal fails: the ReAct output slide already shows the same loop shape.
       </aside>
     </section>
 
     <!-- Reflection · code -->
-    <section>
-      <p class="preheader">Pattern 04 · Reflection</p>
-      <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">One call does the work, another call <span class="em text-gradient">attacks</span> it</h2>
-      <pre><code class="language-python" data-trim data-line-numbers="|1-2|5|6-7|8-9|10-12"><script type="text/template">
+    <section data-auto-animate>
+      <h2 class="h-title pattern-head">Pattern 04 · <span class="em text-gradient">Reflection</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 28px;">One call does the work, another call attacks it</p>
+      <pre data-id="code-reflection"><code class="language-python" data-trim data-line-numbers="|1-2|5|6-7|8-9"><script type="text/template">
 def lint(text):  # never pay a model to count characters
     return [f"{len(text)} characters, limit is {LIMIT}"] if len(text) > LIMIT else []
 
@@ -1044,60 +1413,104 @@ for round_no in range(3):  # the ceiling is code, the critic decides
     if not issues:
         break
       </script></code></pre>
-      <p class="body muted mt-m">Brief: meta description for a rechargeable trail headlamp, max 155 characters.</p>
+      <div class="brief mt-m"><span class="brief-label">The brief</span><span class="brief-text">Meta description for a <strong>rechargeable trail headlamp</strong> <span class="brief-sep">·</span> max <strong class="accent">155 characters</strong></span></div>
       <aside class="notes">
-        [23:30 – 25:00] Reflection: the first call produces the work, a second call with a different job attacks it.
-        lint() is plain Python — never pay a model to count characters.
-        Each round: write a draft that addresses the known issues, then a hostile reviewer judges it. Issues = lint failures + critic failures. No issues? Stop.
-        The loop runs until the critic is satisfied or the ceiling of 3 rounds is hit. Because the length isn't fixed, this is an autonomous pattern, not a two-step workflow.
+        [23:30 – 24:30] Reflection: the first call produces the work, a second call with a different job attacks it.
+        lint() is plain Python - never pay a model to count characters.
+        Each round: write a draft that addresses the known issues, then a hostile reviewer judges it.
+        [Advance] The code animates into the next slide - how a round ends.
       </aside>
     </section>
 
-    <!-- Reflection · output + when -->
-    <section>
-      <p class="preheader">Pattern 04 · Reflection</p>
-      <h2 class="h-title" style="margin-bottom: 30px;">Code checks the rules, the model judges the <span class="em text-gradient">quality</span></h2>
-      <div class="grid-2" style="gap: 28px;">
-        <div class="card hurt">
-          <p class="card-eyebrow">Round 1 · 190 characters</p>
-          <p class="muted" style="font-size: 20px;">"Discover the best-in-class TrailLight 2, a revolutionary rechargeable trail headlamp built for serious night runners, with a huge 40-hour burn time and an ultra-bright beam. Buy yours today."</p>
-          <p class="mt-s" style="font-size: 18px;"><span style="color: var(--color-rose);">lint:</span> 190 characters, limit is 155<br><span style="color: var(--color-rose);">critic:</span> 'best-in-class' is filler and the CTA is generic</p>
-        </div>
-        <div class="card use">
-          <p class="card-eyebrow">Round 2 · 126 characters</p>
-          <p style="font-size: 20px;">"TrailLight 2: a rechargeable trail headlamp with 40-hour burn time and a 400-lumen beam for night runs. See sizes and pricing."</p>
-          <p class="mt-s" style="font-size: 18px; color: var(--color-sea);">APPROVED</p>
-        </div>
-      </div>
-      <div class="grid-3 mt-m">
-        <div class="card fragment fade-up">
-          <p class="card-eyebrow">Regex can do it? Code does it</p>
-          <p>Character counts, banned phrases, required keywords, schema validation.</p>
-        </div>
-        <div class="card use fragment fade-up">
-          <p class="card-eyebrow">Use it when</p>
-          <p>First drafts aren't good enough and failure modes are hard to specify up front</p>
-          <span class="tag">Code review</span><span class="tag">Vulnerability patching</span>
-        </div>
-        <div class="card hurt fragment fade-up">
-          <p class="card-eyebrow">It hurts when</p>
-          <p>The judgement is deterministic. If a test suite can decide, run the tests — don't ask for an opinion.</p>
+    <!-- Reflection · the stop rule (auto-animates from the code slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 04 · <span class="em text-gradient">Reflection</span></h2>
+        <div class="code-stage">
+          <pre data-id="code-reflection"><code class="language-python" data-line-numbers data-ln-start-from="10"><script type="text/template">    issues = lint(draft) + ([verdict] if verdict.startswith("FAIL") else [])
+    if not issues:
+        break</script></code></pre>
+          <p class="crux fragment fade-up">Two judges: <strong class="accent">lint</strong> for the rules, the <strong class="accent">critic</strong> for the quality.</p>
         </div>
       </div>
       <aside class="notes">
-        [25:00 – 27:00] Round 1 failed twice: lint caught 190 characters against a limit of 155 with full reliability, and the critic caught "best-in-class" filler and a generic CTA. Round 2: 126 characters, specific numbers, approved.
-        Rule of thumb: anything a regex can do goes in code — character counts, banned words, required keywords, schema validation. Use the model only for judgement: is the CTA specific, is the claim quantified.
+        [24:30 – 25:00] Issues = lint failures + critic failures. No issues? Stop.
+        The loop runs until the critic is satisfied or the ceiling of 3 rounds is hit. Because the length isn't fixed, this is an autonomous pattern, not a two-step workflow.
+        [Advance] The callout: two judges - lint for the rules, the critic for the quality.
+      </aside>
+    </section>
+
+    <!-- Reflection · output -->
+    <section class="rounds-slide">
+      <h2 class="h-title pattern-head">Pattern 04 · <span class="em text-gradient">Reflection</span></h2>
+      <p class="pattern-sub">Code checks the rules, the model judges the quality</p>
+      <div class="grid-2" style="gap: 32px;">
+        <div class="card hurt">
+          <p class="card-eyebrow">Round 1 · 190 characters</p>
+          <p class="draft">"Discover the best-in-class TrailLight 2, a revolutionary rechargeable trail headlamp built for serious night runners, with a huge 40-hour burn time and an ultra-bright beam. Buy yours today."</p>
+          <div class="checks">
+            <span class="who">lint</span><span>190 / 155 characters</span>
+            <span class="who">critic</span><span>filler words, generic CTA</span>
+          </div>
+          <span class="vote block">FAIL</span>
+        </div>
+        <div class="card use fragment fade-up">
+          <p class="card-eyebrow">Round 2 · 126 characters</p>
+          <p class="draft">"TrailLight 2: a rechargeable trail headlamp with 40-hour burn time and a 400-lumen beam for night runs. See sizes and pricing."</p>
+          <div class="checks">
+            <span class="who">lint</span><span>126 / 155 characters</span>
+            <span class="who">critic</span><span>specific, quantified</span>
+          </div>
+          <span class="vote accept">PASS</span>
+        </div>
+      </div>
+      <aside class="notes">
+        [25:00 – 26:00] Round 1 failed twice: lint caught 190 characters against a limit of 155 with full reliability, and the critic caught "best-in-class" filler and a generic CTA.
+        [Advance] Round 2: 126 characters, specific numbers, approved.
         Give the critic a different job: find what's wrong. Don't make it redo the writer's work.
-        Use it when first drafts are insufficient or failure modes are hard to specify — code review, vulnerability patching.
-        It hurts when the judgement is deterministic. If tests can say whether the work is correct, run the tests.
+      </aside>
+    </section>
+
+    <!-- Reflection · when -->
+    <section class="when-slide">
+      <h2 class="h-title pattern-head">Pattern 04 · <span class="em text-gradient">Reflection</span></h2>
+      <p class="pattern-sub">Rules go in code, judgement goes to the model</p>
+      <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; align-items: stretch;">
+        <div class="card det code-rule fragment fade-up">
+          <p class="card-eyebrow">Rule of thumb</p>
+          <p class="rule-head">If code can check it, <strong class="accent">don't ask the model</strong>.</p>
+          <div class="chips">
+            <span class="chip">character counts</span><span class="chip">banned phrases</span>
+            <span class="chip">required keywords</span><span class="chip">schema validation</span>
+          </div>
+        </div>
+        <div class="card use fragment fade-up">
+          <p class="card-eyebrow">Use it when</p>
+          <ul class="list sm">
+            <li>First drafts aren't good enough</li>
+            <li>Failure modes are hard to specify up front</li>
+          </ul>
+          <span class="tag">Code review</span>
+          <span class="tag">Vulnerability patching</span>
+        </div>
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">It hurts when</p>
+          <p>The judgement is deterministic</p>
+          <p class="example mt-s">If a test suite can decide, run the tests.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [26:00 – 27:00] [Advance] Rule of thumb: if code can check it, don't ask the model - character counts, banned words, required keywords, schema validation. Use the model only for judgement: is the CTA specific, is the claim quantified.
+        [Advance] Use it when first drafts are insufficient or failure modes are hard to specify - code review, vulnerability patching.
+        [Advance] It hurts when the judgement is deterministic. If tests can say whether the work is correct, run the tests.
       </aside>
     </section>
 
     <!-- Collaboration · code -->
-    <section>
-      <p class="preheader">Pattern 05 · Collaboration</p>
-      <h2 class="h-title" style="font-size: 52px; margin-bottom: 24px;">Specialists hand work to each other — no <span class="em text-gradient">manager</span></h2>
-      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-5|8|9-15|16-19"><script type="text/template">
+    <section data-auto-animate>
+      <h2 class="h-title pattern-head">Pattern 05 · <span class="em text-gradient">Collaboration</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 24px;">Specialists hand work to each other - no manager</p>
+      <pre class="sm" data-id="code-collab"><code class="language-python" data-trim data-line-numbers="|1-5|8|9-15"><script type="text/template">
 PEERS = {
     "copywriter":   "You write short social copy.",
     "art_director": "You turn copy into an image direction.",
@@ -1119,63 +1532,102 @@ for handoff in range(8):  # the cycle guard belongs in code
     peer = reply["to"]  # note: a peer can hand work BACKWARDS
       </script></code></pre>
       <aside class="notes">
-        [27:00 – 28:30] Collaboration: specialist agents hand the work to each other. No manager, no supervisor.
+        [27:00 – 28:00] Collaboration: specialist agents hand the work to each other. No manager, no supervisor.
         Three peers: copywriter, art director, compliance.
-        Every peer sees the whole thread, does its part, and picks who goes next — as JSON.
-        range(8) is the cycle guard, in code. And the last line: a peer can hand work backwards.
+        Every peer sees the whole thread, does its part, and picks who goes next - as JSON.
+        range(8) is the cycle guard, in code.
+        [Advance] The code animates into the next slide - the handoff.
+      </aside>
+    </section>
+
+    <!-- Collaboration · the handoff (auto-animates from the code slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 05 · <span class="em text-gradient">Collaboration</span></h2>
+        <div class="code-stage">
+          <pre class="sm" data-id="code-collab"><code class="language-python" data-line-numbers="|4" data-ln-start-from="16"><script type="text/template">    thread.append(f"{peer}: {reply['work']}")
+    if reply["to"] == "done":
+        break
+    peer = reply["to"]  # note: a peer can hand work BACKWARDS</script></code></pre>
+          <p class="crux fragment fade-up">The <strong class="accent">model</strong> picks who goes next - even backwards.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [28:00 – 28:30] Each peer's work lands in the shared thread; "done" ends the run.
+        [Advance] The last line: a peer can hand work backwards.
+        [Advance] The callout: the model picks who goes next - even backwards.
       </aside>
     </section>
 
     <!-- Collaboration · trace -->
-    <section>
-      <p class="preheader">Pattern 05 · Collaboration</p>
-      <h2 class="h-title" style="margin-bottom: 28px;">Handoff 3 proves the <span class="em text-gradient">pattern</span></h2>
+    <section class="lift">
+      <h2 class="h-title pattern-head">Pattern 05 · <span class="em text-gradient">Collaboration</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 28px;">Handoff 3 proves the pattern</p>
       <div class="trace">
         <div class="trace-row"><span class="n">1</span><span class="who">copywriter</span><span>Headline: One cup. Every refill.</span><span class="to">→ art_director</span></div>
         <div class="trace-row"><span class="n">2</span><span class="who">art_director</span><span>Overhead shot of one cup, faint coffee rings, morning light.</span><span class="to">→ compliance</span></div>
-        <div class="trace-row back fragment fade-up" data-fragment-index="1"><span class="n">3</span><span class="who">compliance</span><span>REJECTED: "plastic-free" is unsupported — the lid gasket is silicone.</span><span class="to">↩ copywriter</span></div>
+        <div class="trace-row back fragment fade-up" data-fragment-index="1"><span class="n">3</span><span class="who">compliance</span><span>REJECTED: "plastic-free" is unsupported - the lid gasket is silicone.</span><span class="to">↩ copywriter</span></div>
         <div class="trace-row fragment fade-up" data-fragment-index="2"><span class="n">4</span><span class="who">copywriter</span><span>Headline: Your 4th coffee of the day, same cup.</span><span class="to">→ art_director</span></div>
         <div class="trace-row fragment fade-up" data-fragment-index="2"><span class="n">5</span><span class="who">art_director</span><span>2×2 grid: the same cup at four times of one workday.</span><span class="to">→ compliance</span></div>
         <div class="trace-row done fragment fade-up" data-fragment-index="2"><span class="n">6</span><span class="who">compliance</span><span>APPROVED. Every claim is substantiated.</span><span class="to">✓ done</span></div>
       </div>
-      <p class="body mt-m fragment fade-up" data-fragment-index="3"><strong>One rejection propagated through two peers.</strong> <span class="muted">A new headline invalidated the image direction too — and nothing scheduled that rework. A peer chose it mid-run.</span></p>
+      <div class="takeaways mt-m">
+        <div class="fragment fade-up" data-fragment-index="3"><strong>One rejection</strong> rippled through two peers</div>
+        <div class="fragment fade-up" data-fragment-index="4"><strong>New headline</strong> → the image had to be redone</div>
+        <div class="fragment fade-up" data-fragment-index="5"><strong class="accent">No code</strong> scheduled that rework - a peer chose it</div>
+      </div>
       <aside class="notes">
         [28:30 – 30:30] Six handoffs happened, but handoff 3 is where the pattern proves itself.
         Look at handoffs 1–3 in isolation: copywriter, art director, compliance. That's indistinguishable from a hard-coded pipeline. If compliance had approved, you'd have no evidence you were looking at anything but three sequential stages.
         [Advance] At handoff 3, compliance read the thread and sent the work back to the copywriter, who had already had a turn.
-        [Advance] The new headline also invalidated the image direction, so the art director ran again. One rejection propagated through two peers.
-        That backward handoff makes this a mesh and not a pipeline. Nothing scheduled the rework loop, and no supervisor was needed.
+        [Advance] The copywriter writes a new headline, the art director redoes the image, compliance approves.
+        [Advance] One rejection propagated through two peers.
+        [Advance] The new headline invalidated the image direction too, so the art director ran again.
+        [Advance] Nothing scheduled that rework - a peer chose it mid-run. That backward handoff makes this a mesh and not a pipeline, and no supervisor was needed.
       </aside>
     </section>
 
     <!-- Collaboration · when -->
-    <section>
-      <p class="preheader">Pattern 05 · Collaboration</p>
-      <h2 class="h-title">Freedom costs <span class="em text-gradient">cycles</span></h2>
-      <p class="lead" style="margin-bottom: 36px;">Compliance and the copywriter can bounce work between them forever. The guardrail doesn't have to be clever: a ceiling in code, or a cap on visits per peer.</p>
-      <div class="grid-2">
+    <section class="when-slide">
+      <h2 class="h-title pattern-head">Pattern 05 · <span class="em text-gradient">Collaboration</span></h2>
+      <p class="pattern-sub">Freedom costs cycles</p>
+      <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; align-items: stretch;">
+        <div class="card risk fragment fade-up">
+          <p class="card-eyebrow">The risk</p>
+          <p>Compliance ↔ copywriter can bounce work <strong class="warn">forever</strong></p>
+          <p class="card-eyebrow mt-m">Guardrail</p>
+          <div class="chips">
+            <span class="chip">range(8) ceiling</span>
+            <span class="chip">visits per peer cap</span>
+          </div>
+        </div>
         <div class="card use fragment fade-up">
           <p class="card-eyebrow">Use it when</p>
-          <p>The work is a chain of specialists, and each handoff needs the previous specialist's output</p>
-          <span class="tag">Creative pipeline</span><span class="tag">Multi-stage routing</span>
+          <ul class="list sm">
+            <li>A chain of specialists</li>
+            <li>Each needs the previous output</li>
+          </ul>
+          <span class="tag">Creative pipeline</span>
+          <span class="tag">Multi-stage routing</span>
         </div>
         <div class="card hurt fragment fade-up">
           <p class="card-eyebrow">It hurts when</p>
-          <p>You need one accountable answer — nobody in a mesh of specialists owns the outcome</p>
+          <p>You need <strong>one accountable answer</strong></p>
+          <p class="example mt-s">Nobody in a mesh owns the outcome.</p>
         </div>
       </div>
       <aside class="notes">
-        [30:30 – 31:30] The cost of that freedom is cycles. Compliance and copywriter could hand off to each other indefinitely. The guardrail can be as simple as a ceiling number in code, or a per-peer visit cap.
-        Use it for chains of specialists where each needs the previous output — creative pipelines, multi-stage routing.
-        It hurts when you need a single accountable answer, because nobody in the mesh owns the outcome. Which brings us to the Supervisor.
+        [30:30 – 31:30] [Advance] The cost of that freedom is cycles. Compliance and copywriter could hand off to each other indefinitely. The guardrail doesn't have to be clever: a ceiling number in code, or a per-peer visit cap.
+        [Advance] Use it for chains of specialists where each needs the previous output - creative pipelines, multi-stage routing.
+        [Advance] It hurts when you need a single accountable answer, because nobody in the mesh owns the outcome. Which brings us to the Supervisor.
       </aside>
     </section>
 
     <!-- Supervisor · code -->
-    <section>
-      <p class="preheader">Pattern 06 · Supervisor</p>
-      <h2 class="h-title" style="font-size: 52px; margin-bottom: 24px;">One manager — workers see only their <span class="em text-gradient">assignment</span></h2>
-      <pre class="sm"><code class="language-python" data-trim data-line-numbers="|1-5|7-12|9|14-18"><script type="text/template">
+    <section data-auto-animate>
+      <h2 class="h-title pattern-head">Pattern 06 · <span class="em text-gradient">Supervisor</span></h2>
+      <p class="pattern-sub" style="margin-bottom: 24px;">One manager - workers see only their assignment</p>
+      <pre class="sm" data-id="code-supervisor"><code class="language-python" data-trim data-line-numbers="|1-5|7-12|14-18"><script type="text/template">
 plan = json.loads(ask(
     f"Ticket: {TICKET}\n\nAssign work to {list(WORKERS)}.\n"
     'JSON only: {"assign": [{"worker": str, "task": str}]}',
@@ -1195,23 +1647,46 @@ answer = json.loads(ask(
     system=BOSS,
 ))["answer"]
       </script></code></pre>
-      <p class="body muted mt-s">Ticket: charged twice in March since the SSO cutover, and unfamiliar login IP ranges — renewal in three weeks.</p>
+      <div class="brief mt-s"><span class="brief-label">The ticket</span><span class="brief-text"><strong>Charged twice</strong> since the SSO cutover <span class="brief-sep">·</span> <strong>unfamiliar login IPs</strong> <span class="brief-sep">·</span> renewal in <strong class="accent">3 weeks</strong></span></div>
       <aside class="notes">
-        [31:30 – 33:00] Supervisor: one manager, workers that only see their assignment.
+        [31:30 – 32:30] Supervisor: one manager, workers that only see their assignment.
         The ticket: an enterprise customer was charged twice since the SSO cutover, and security sees logins from unknown IP ranges. Renewal in three weeks.
         Step 1: the boss assigns tasks to billing and platform workers.
-        Step 2: each worker gets the ticket plus its own task — that's its entire context.
+        Step 2: each worker gets the ticket plus its own task.
         Step 3: the boss combines the reports into one customer answer.
+        [Advance] The code animates into the next slide - back to the workers.
       </aside>
     </section>
 
-    <!-- Supervisor · isolation + when -->
-    <section>
-      <p class="preheader">Pattern 06 · Supervisor</p>
-      <h2 class="h-title" style="margin-bottom: 30px;">One f-string is the isolation <span class="em text-gradient">boundary</span></h2>
-      <div class="grid-2" style="grid-template-columns: 1.15fr 1fr; gap: 40px;">
-        <div>
-          <div class="terminal"><span class="t-sea">billing </span> Two charges four days apart. A duplicate
+    <!-- Supervisor · the isolation line (auto-animates from the code slide) -->
+    <section class="code-focus" data-auto-animate>
+      <div class="slide-fill">
+        <h2 class="h-title pattern-head">Pattern 06 · <span class="em text-gradient">Supervisor</span></h2>
+        <div class="code-stage">
+          <pre class="sm" data-id="code-supervisor"><code class="language-python" data-trim data-line-numbers="|3" data-ln-start-from="7"><script type="text/template">
+reports = {}
+for job in plan["assign"]:
+    reports[job["worker"]] = ask(
+        f"Ticket: {TICKET}\n\nYour task: {job['task']}",  # ENTIRE context
+        system=WORKERS[job["worker"]],
+    )
+          </script></code></pre>
+          <p class="crux fragment fade-up">A worker sees its task - <strong class="accent">nothing else</strong>.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [32:30 – 33:00] Back to the workers.
+        [Advance] Line 9: the ticket plus its own task - that's a worker's entire context.
+        [Advance] The callout: a worker sees its task, nothing else.
+      </aside>
+    </section>
+
+    <!-- Supervisor · isolation -->
+    <section class="iso-slide">
+      <h2 class="h-title pattern-head">Pattern 06 · <span class="em text-gradient">Supervisor</span></h2>
+      <div class="crux boundary">One <strong class="accent">f-string</strong> is the isolation boundary <code class="inline">f"Ticket: {TICKET}\n\nYour task: {job['task']}"</code></div>
+      <div class="grid-2" style="grid-template-columns: 1.15fr 1fr; gap: 48px;">
+        <div class="terminal"><span class="t-sea">billing </span> Two charges four days apart. A duplicate
           org entity was billed twice.
 <span class="t-sea">platform</span> SCIM still pointed at the old directory
           and created a second org.
@@ -1220,58 +1695,78 @@ answer = json.loads(ask(
 duplicate org record. That single fault caused both
 the double invoice and the unfamiliar logins, which
 came from our own provisioning range.</div>
-          <ul class="list sm mt-m">
-            <li>Ticket plus own task — no sibling reports, no manager reasoning, no history</li>
-            <li>Small contexts; workers run in parallel</li>
-            <li>One worker's wrong guess can't become another worker's premise</li>
+        <ul class="list sm">
+          <li class="fragment fade-up">Ticket plus own task - <strong>no sibling reports, no manager reasoning, no history</strong></li>
+          <li class="fragment fade-up">Small contexts; workers run <strong>in parallel</strong></li>
+          <li class="fragment fade-up">One worker's wrong guess <strong>can't become another worker's premise</strong></li>
+        </ul>
+      </div>
+      <aside class="notes">
+        [33:00 – 33:45] Say it plainly: one f-string is the isolation boundary. The line doing the heavy lifting is the single f-string that builds the worker prompt: the ticket plus the worker's own task, and nothing else.
+        [Advance] No sibling reports, no manager reasoning, no history.
+        [Advance] So every context stays small, and workers can run in parallel.
+        [Advance] And one worker's wrong guess can't become another worker's premise.
+        The result: the supervisor connected two separate symptoms to one root cause.
+      </aside>
+    </section>
+
+    <!-- Supervisor · when -->
+    <section class="when-slide">
+      <h2 class="h-title pattern-head">Pattern 06 · <span class="em text-gradient">Supervisor</span></h2>
+      <p class="pattern-sub">Isolated workers, one owner of the answer</p>
+      <div class="grid-2" style="gap: 32px; align-items: stretch;">
+        <div class="card use fragment fade-up">
+          <p class="card-eyebrow">Use it when</p>
+          <ul class="list sm">
+            <li>The request splits into independent specialist questions</li>
+            <li>Someone must own the combined answer</li>
           </ul>
+          <span class="tag">Codebase understanding</span>
+          <span class="tag">Multi-analyst research</span>
+          <span class="tag">"Search these six subsystems"</span>
         </div>
-        <div class="stack">
-          <div class="card use fragment fade-up">
-            <p class="card-eyebrow">Use it when</p>
-            <p>The request splits into independent specialist questions, and someone must own the combined answer</p>
-            <span class="tag">Codebase understanding</span><span class="tag">Multi-analyst research</span>
-            <span class="tag">"Search these six subsystems"</span>
-          </div>
-          <div class="card hurt fragment fade-up">
-            <p class="card-eyebrow">It hurts when</p>
-            <p>Workers depend on each other. The supervisor carries every cross-cutting decision — if workers need each other's raw output, use Collaboration.</p>
-          </div>
+        <div class="card hurt fragment fade-up">
+          <p class="card-eyebrow">It hurts when</p>
+          <ul class="list sm">
+            <li>Workers depend on each other</li>
+            <li>The supervisor carries every cross-cutting decision</li>
+          </ul>
+          <p class="example mt-s">Need each other's raw output? Use Collaboration.</p>
         </div>
       </div>
       <aside class="notes">
-        [33:00 – 34:30] The line doing the heavy lifting is the single f-string that builds the worker prompt. It's the isolation boundary: the ticket plus the worker's own task, and nothing else. No sibling reports, no manager reasoning, no history.
-        So every context stays small, workers can run in parallel, and one worker's wrong guess can't become another worker's premise.
-        The result: the supervisor connected two separate symptoms to one root cause.
-        The price: every cross-cutting decision happens in the supervisor. If two workers genuinely need each other's raw output, Collaboration fits better.
-        Use it when the request splits into independent specialist questions and someone must own the combined answer — codebase understanding, multi-analyst research.
+        [33:45 – 34:30] [Advance] Use it when the request splits into independent specialist questions and someone must own the combined answer - codebase understanding, multi-analyst research.
+        [Advance] The price: every cross-cutting decision happens in the supervisor. If two workers genuinely need each other's raw output, Collaboration fits better.
       </aside>
     </section>
 
     <!-- ═══════════════════════════ CLOSING ═══════════════════════════ -->
 
     <!-- Pairs -->
-    <section>
+    <section class="pairs-slide lift">
       <p class="preheader">Read them in pairs</p>
       <h2 class="h-title">The patterns teach more against each other than <span class="em text-gradient">alone</span></h2>
       <div class="grid-3">
-        <div class="card fragment fade-up">
-          <p class="card-eyebrow">Planning vs ReAct</p>
-          <h3>Same job shape, opposite control flow</h3>
-          <p>Planning fixes the order. ReAct discovers it on the go.</p>
-          <p class="muted mt-s" style="font-size: 19px;">Pick wrong and you either pay for non-determinism you didn't need, or run a stale plan.</p>
+        <div class="card pair fragment fade-up">
+          <p class="card-eyebrow">Same job, opposite control flow</p>
+          <div class="side det"><span class="name">Planning</span><span class="what">fixes the order</span></div>
+          <span class="vs">vs</span>
+          <div class="side auto"><span class="name">ReAct</span><span class="what">discovers the order</span></div>
+          <p class="bottom">Pick wrong: <strong class="warn">needless non-determinism</strong>, or <strong class="warn">a stale plan</strong>.</p>
         </div>
-        <div class="card fragment fade-up">
-          <p class="card-eyebrow">Voting vs Reflection</p>
-          <h3>Multiple calls, opposite reasons</h3>
-          <p>Voting keeps reviewers apart: disagreement is a measurement.</p>
-          <p class="muted mt-s" style="font-size: 19px;">Reflection shows the output to the critic on purpose: the goal is improvement, not confidence.</p>
+        <div class="card pair fragment fade-up">
+          <p class="card-eyebrow">Many calls, opposite reasons</p>
+          <div class="side det"><span class="name">Voting</span><span class="what">keeps reviewers apart</span></div>
+          <span class="vs">vs</span>
+          <div class="side auto"><span class="name">Reflection</span><span class="what">shows the critic the draft</span></div>
+          <p class="bottom"><strong>Isolation measures.</strong> <strong>Exposure improves.</strong></p>
         </div>
-        <div class="card fragment fade-up">
-          <p class="card-eyebrow">Collaboration vs Supervisor</p>
-          <h3>The difference is context</h3>
-          <p>Collaboration shares the thread and allows backward handoffs.</p>
-          <p class="muted mt-s" style="font-size: 19px;">Supervisor isolates each worker, so one guess can't contaminate another.</p>
+        <div class="card pair fragment fade-up">
+          <p class="card-eyebrow">The difference is context</p>
+          <div class="side auto"><span class="name">Collaboration</span><span class="what">one shared thread</span></div>
+          <span class="vs">vs</span>
+          <div class="side auto"><span class="name">Supervisor</span><span class="what">isolated workers</span></div>
+          <p class="bottom"><strong>Shared context spreads errors.</strong> <strong>Isolation contains them.</strong></p>
         </div>
       </div>
       <aside class="notes">
@@ -1283,7 +1778,7 @@ came from our own provisioning range.</div>
     </section>
 
     <!-- Decision table -->
-    <section>
+    <section class="lift">
       <p class="preheader">Choosing the pattern</p>
       <h2 class="h-title" style="font-size: 52px; margin-bottom: 28px;">If this is true, use <span class="em text-gradient">this</span></h2>
       <table class="epam">
@@ -1295,9 +1790,12 @@ came from our own provisioning range.</div>
           <tr><td>First drafts aren't good enough, and the flaws are hard to pre-specify</td><td>Reflection</td></tr>
           <tr><td>Specialists must pass real work between them, with rework</td><td>Collaboration</td></tr>
           <tr><td>Independent specialist questions, one accountable answer</td><td>Supervisor</td></tr>
-          <tr class="kiss fragment fade-up"><td>None of the above clearly applies</td><td>A single model call. Seriously, KISS.</td></tr>
         </tbody>
       </table>
+      <div class="kiss-callout fragment fade-up">
+        <span class="kiss-if">None of the above clearly applies?</span>
+        <span class="kiss-then">A <span class="em text-gradient">single model call</span>. Seriously, <strong>KISS</strong>.</span>
+      </div>
       <aside class="notes">
         [36:00 – 37:00] Here's the cheat sheet. Read the left column as a question about your problem, not your preferred framework.
         [Advance] And the last row is not a joke. If none of these clearly applies, make a single model call. Keep it simple.
@@ -1307,7 +1805,7 @@ came from our own provisioning range.</div>
     <!-- Four checks -->
     <section>
       <p class="preheader">Before you reach for any pattern</p>
-      <h2 class="h-title">Four checks — one "no" means change the <span class="em text-gradient">design</span></h2>
+      <h2 class="h-title">Four checks - one "no" means change the <span class="em text-gradient">design</span></h2>
       <div class="grid-2" style="gap: 24px;">
         <div class="card fragment fade-up"><p class="card-eyebrow">01</p><h3 style="margin: 0;">Is the task genuinely multi-step and hard to fully specify?</h3></div>
         <div class="card fragment fade-up"><p class="card-eyebrow">02</p><h3 style="margin: 0;">Does the outcome justify the cost and latency?</h3></div>
@@ -1319,27 +1817,6 @@ came from our own provisioning range.</div>
         [37:00 – 38:00] Four checks from Anthropic's own guidance on when to build an agent and when not to.
         Is the task genuinely multi-step and hard to specify? Does the outcome justify cost and latency? Is the model actually needed? Can errors be caught and recovered from?
         A single "no" means change your design. This one paragraph alone explains where most teams go wrong.
-      </aside>
-    </section>
-
-    <!-- Guardrails -->
-    <section>
-      <p class="preheader">The part nobody tells you</p>
-      <h2 class="h-title" style="margin-bottom: 30px;">A prompt is a request. Code is a <span class="em text-gradient">constraint.</span></h2>
-      <table class="epam">
-        <thead><tr><th>Pattern</th><th>Guardrails that belong in code</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Planning</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Validate the plan first; gate each step's artifact</td></tr>
-          <tr><td><strong>Voting</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The veto rule, the majority threshold, the escalation path</td></tr>
-          <tr><td><strong>ReAct</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The step cap, approval gates on tools</td></tr>
-          <tr><td><strong>Reflection</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Every deterministic check, the maximum round count</td></tr>
-          <tr><td><strong>Collaboration</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The handoff limit, per-peer visit limit, routing validation</td></tr>
-          <tr><td><strong>Supervisor</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The round ceiling, and the isolation boundary itself</td></tr>
-        </tbody>
-      </table>
-      <aside class="notes">
-        [38:00 – 38:45] Every pattern needs guardrails, and in every case they belong in code, not in a prompt. A prompt is a request; code is a constraint.
-        Quickly run down the table — you've already seen each of these in the examples.
       </aside>
     </section>
 
@@ -1358,43 +1835,68 @@ for step in range(6):
           <p style="font-size: 32px; font-weight: 300; padding: 8px 0; font-family: var(--font-mono);">"Please don't loop forever."</p>
         </div>
       </div>
-      <p class="lead mt-l fragment fade-up">Don't trust an agent's summary of its own work. <strong style="color: var(--text-primary);">"Fixed and verified"</strong> is text, not evidence.</p>
-      <p class="lead mt-s fragment fade-up">If the outcome is checkable, check it in code: tests pass, the file exists, row counts match. This one habit catches more failures than any amount of prompt engineering.</p>
+      <ul class="list habit-list mt-l">
+        <li class="fragment fade-up" data-fragment-index="1">Don't trust an agent's <strong>summary of its own work</strong></li>
+        <li class="fragment fade-up" data-fragment-index="1"><strong class="warn">"Fixed and verified"</strong> is text, not evidence</li>
+        <li class="fragment fade-up" data-fragment-index="2">Verifiable outcome? <strong class="accent">Check it in code</strong>
+          <span class="chips"><span class="chip">tests pass</span><span class="chip">file exists</span><span class="chip">row counts match</span></span>
+          <ul class="list sub">
+            <li>This habit catches more failures than <strong>any amount of prompt engineering</strong></li>
+          </ul>
+        </li>
+      </ul>
       <aside class="notes">
-        [38:45 – 39:30] Notice how many guardrails are one line. `for step in range(6)` is a real guardrail. "Please don't loop forever" is not.
-        [Advance] One last habit worth building: never trust an agent's own summary of its work. An agent that says "Fixed and verified" is producing text, not evidence.
-        [Advance] If the outcome is checkable, check it yourself in code — tests passing, file exists, row counts matching. That single step catches more failures than any amount of prompt engineering.
+        [38:00 – 38:45] Notice how many guardrails are one line. `for step in range(6)` is a real guardrail. "Please don't loop forever" is not.
+        [Advance] One last habit worth building: never trust an agent's own summary of its work. An agent that says "Fixed and verified" is producing text, not evidence. Callback: remember the hands that went up at the start for "fixed and verified"? This is the fix.
+        [Advance] If the outcome is checkable, check it yourself in code - tests passing, file exists, row counts matching. That single step catches more failures than any amount of prompt engineering.
+      </aside>
+    </section>
+
+    <!-- Guardrails -->
+    <section>
+      <p class="preheader">The part nobody tells you</p>
+      <h2 class="h-title" style="margin-bottom: 30px;">A prompt is a request. Code is a <span class="em text-gradient">constraint.</span></h2>
+      <table class="epam">
+        <thead><tr><th>Pattern</th><th>Guardrails that belong in code</th><th>In the examples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Planning</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Validate the plan first; gate each step's artifact</td><td><code class="inline">for i, step in enumerate(steps, 1)</code></td></tr>
+          <tr><td><strong>Voting</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The veto rule, the majority threshold, the escalation path</td><td><code class="inline">count &gt;= 3 else "ESCALATE"</code></td></tr>
+          <tr><td><strong>ReAct</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The step cap, approval gates on tools</td><td><code class="inline">range(6)</code> <code class="inline">TOOLS[name]</code></td></tr>
+          <tr><td><strong>Reflection</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">Every deterministic check, the maximum round count</td><td><code class="inline">range(3)</code> <code class="inline">lint(draft)</code></td></tr>
+          <tr><td><strong>Collaboration</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The handoff limit, per-peer visit limit, routing validation</td><td><code class="inline">range(8)</code></td></tr>
+          <tr><td><strong>Supervisor</strong></td><td style="color: var(--text-primary); font-weight: 300; white-space: normal;">The round ceiling, and the isolation boundary itself</td><td><code class="inline">f"…Your task: {job['task']}"</code></td></tr>
+        </tbody>
+      </table>
+      <aside class="notes">
+        [38:45 – 39:30] Every pattern needs guardrails, and in every case they belong in code, not in a prompt. A prompt is a request; code is a constraint.
+        Quickly run down the table - you've already seen each of these in the examples. The right column is the actual line: range(6), range(3), range(8) are ceilings; count >= 3 is the policy; TOOLS[name] means the model can only call tools you listed; the worker f-string is the isolation boundary.
       </aside>
     </section>
 
     <!-- Thank you -->
     <section data-background-gradient="radial-gradient(ellipse 55% 65% at 78% 50%, rgba(0,246,255,0.22) 0%, transparent 70%), radial-gradient(ellipse 38% 50% at 88% 58%, rgba(184,150,255,0.18) 0%, transparent 65%), #060606">
-      <div style="padding-top: 60px;">
-        <p class="preheader">Thank you</p>
-        <h2 class="h-hero">Start with the question, not the <span class="em text-gradient">framework</span></h2>
-        <p class="lead mt-m">Who decides what happens next — your code or the model?</p>
+      <div style="padding-top: 20px;">
+        <h2 class="h-hero" style="text-align: center;"><span class="em text-gradient">Thank You</span></h2>
         <div class="grid-2 mt-l" style="max-width: 1300px; align-items: center;">
           <div class="qr">
             <img src="static/linkedin-qr.png" alt="QR code for Vivek Keshore on LinkedIn">
             <div class="body">
               <strong>Vivek Keshore</strong><br>
-              <span class="muted">Software Architect, EPAM</span><br>
-              <span class="muted">Let's connect on LinkedIn</span>
+              <span class="link-text">Let's connect on LinkedIn</span>
             </div>
           </div>
           <div class="qr">
-            <!-- Drop a QR for the article at static/article-qr.png; the image hides itself until then. -->
-            <img src="static/article-qr.png" alt="QR code for the article" onerror="this.remove()">
+            <img src="static/git_techscape_Standard.png" alt="QR code for the talk's GitHub repository">
             <div class="body">
-              <span class="muted">Full article and runnable code</span><br>
-              <a href="https://wearecommunity.io/communities/tectoniques/articles/8711">wearecommunity.io · TecToniques<br>article 8711</a>
+              <strong>Slides, examples and demo code</strong><br>
+              <a href="https://github.com/vivekkeshore/techscape_2026">github.com/vivekkeshore/techscape_2026</a>
             </div>
           </div>
         </div>
       </div>
       <aside class="notes">
-        [39:30 – 40:00] Recap in one sentence: start with the question, not the framework — who decides what happens next?
-        Point to both QR codes: LinkedIn, and the article with the full runnable code. Thank the audience and open for questions.
+        [39:30 – 40:00] Recap in one sentence: start with the question, not the framework - who decides what happens next?
+        Point to both QR codes: LinkedIn, and the GitHub repo with these slides, all six examples and the demo. Thank the audience and open for questions.
       </aside>
     </section>
 
@@ -1413,7 +1915,7 @@ for step in range(6):
     center: false,
     hash: true,
     slideNumber: 'c/t',
-    showSlideNumber: 'speaker',
+    showSlideNumber: 'all',
     controls: true,
     controlsTutorial: true,
     progress: true,
